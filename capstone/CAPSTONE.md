@@ -4,7 +4,7 @@ Time: about 2 hours build, 30 minutes review. Work in pairs, one repo per traine
 Covers LO7 (build a working Mini-Lakehouse), with LO3, LO4, LO6, LO8 touched.
 
 Rule: every step is a variation of a tutorial you already ran. Nothing here is new.
-Items marked <VERIFY> are filled in after a live run in the Codespace.
+Expected counts come from a verified Codespace run (see capstone/checks/expected_counts.md).
 
 ## 1. Starter layout (already in this repo)
 
