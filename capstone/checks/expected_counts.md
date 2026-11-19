@@ -15,5 +15,5 @@
 Quality checks (all passed, bad_rows=0): trip_id_unique, fare_is_double, fare_positive,
 city_known, duration_sane, fare_mean_sane.
 
-Open question: silver 44,371 matches the post re-merge figure from the 3-day course
-(pre-re-merge 44,364). Confirm which value a clean run gives.
+Silver count: 44,371 after `make data` and one `make pipeline`. The value 44,364 appears
+only if the Day 2 erase was run and the pipeline has not yet re-merged (DAY3.md).

@@ -71,8 +71,7 @@ completing steps 1-6.
 - Known open items (do NOT expect trainees to fix; mention only as discussion):
   erased trips returning after a bronze re-merge; quarantine write not idempotent.
 - Counts were taken from a Codespace on day3-solutions after `make data` (seed 42) and
-  `make pipeline`. Silver = 44,371 equals the post re-merge figure from the 3-day course
-  (the pre-re-merge figure was 44,364). Confirm which one a clean run gives before the
-  course, and tell trainees to allow either if they see the other.
+  `make pipeline`. Silver = 44,371. It is 44,364 only if the Day 2 erase ran and the pipeline
+  has not yet re-merged the erased trips (see DAY3.md).
 - Delta version numbers depend on how many times a table was rebuilt, so the checklist
   uses relative checks (older vs latest), not fixed version numbers.
