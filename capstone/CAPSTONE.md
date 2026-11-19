@@ -33,7 +33,7 @@ Run each step, then compare the output with the checkpoint. Tick it only when it
 | 3 | Add one Delta constraint and one schema change | T4 | Bad insert is rejected; new column visible |
 | 4 | Build one gold mart | T8 | zone_hourly_demand = 120 rows (or trip_features = 44,371) |
 | 5 | Build a consumer table (BI-safe view OR training set) | T9 | No PII columns; leakage check passes |
-| 6 | Run everything with one command | T8 | run_all.sh exits 0 from a clean state |
+| 6 | Run everything with one command | T8 | make pipeline exits 0 from a clean state |
 | 7 | Prove it: counts per layer and one time-travel query | T5 | silver/trips has more than one version; an older version's count differs from the latest |
 | 8 | Write the README and submit | SUBMIT.md | Template filled, branch pushed |
 
@@ -45,7 +45,7 @@ Reminders: one Spark session at a time. If a step hangs, close other terminals r
 
 | Area | Points | Full marks when |
 |------|--------|-----------------|
-| Pipeline runs end to end | 25 | run_all.sh succeeds from clean state |
+| Pipeline runs end to end | 25 | make pipeline succeeds from clean state |
 | Bronze to silver correctness | 15 | Counts match checkpoints; quality gate present |
 | Delta controls | 15 | Constraint blocks bad data; schema change applied safely |
 | Gold and consumer table | 15 | Mart correct; consumer table has no PII or leakage |
