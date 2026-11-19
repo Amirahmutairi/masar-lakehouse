@@ -50,7 +50,7 @@ Reminders: one Spark session at a time. If a step hangs, close other terminals r
 | Delta controls | 15 | Constraint blocks bad data; schema change applied safely |
 | Gold and consumer table | 15 | Mart correct; consumer table has no PII or leakage |
 | Proof (counts, time travel) | 10 | Counts per layer shown; time-travel query correct |
-| README and explanation | 15 | Trainee explains each layer and one design choice in own words |
+| README and explanation | 20 | Trainee explains each layer and one design choice in own words |
 | Borrowed steps | -5 each | Deduct per step copied from the fallback branch, max -15 |
 | Stretch | +5 | Any one stretch item working, only if score is already 80 or more |
 
