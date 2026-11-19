@@ -29,7 +29,7 @@ SKIP_SEC = re.compile(r"start here only|if something goes wrong|end of day|tutor
 SKIP_BLK = re.compile(r"kafka|docker|gps_producer|ingest_gps_stream|ping_windows|git |land_bronze_late|late_trip")
 p = subprocess.Popen(["bash"], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, bufsize=1)
 def run(cmd):
-    p.stdin.write(cmd + "\necho __MARK__$?\n"); p.stdin.flush()
+    p.stdin.write(cmd + "\n__rc=$?; echo; echo __MARK__$__rc\n"); p.stdin.flush()
     out = []
     while True:
         l = p.stdout.readline()
