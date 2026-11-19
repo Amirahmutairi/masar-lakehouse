@@ -1,0 +1,42 @@
+:: loading settings :: url = jar:file:/workspaces/masar-lakehouse/.venv/lib/python3.11/site-packages/pyspark/jars/ivy-2.5.1.jar!/org/apache/ivy/core/settings/ivysettings.xml
+Ivy Default Cache set to: /home/vscode/.ivy2/cache
+The jars for the packages stored in: /home/vscode/.ivy2/jars
+io.delta#delta-spark_2.12 added as a dependency
+:: resolving dependencies :: org.apache.spark#spark-submit-parent-fd547b2f-3e0f-4420-bb1c-52e2631eb2ab;1.0
+	confs: [default]
+	found io.delta#delta-spark_2.12;3.2.0 in central
+	found io.delta#delta-storage;3.2.0 in central
+	found org.antlr#antlr4-runtime;4.9.3 in central
+:: resolution report :: resolve 188ms :: artifacts dl 8ms
+	:: modules in use:
+	io.delta#delta-spark_2.12;3.2.0 from central in [default]
+	io.delta#delta-storage;3.2.0 from central in [default]
+	org.antlr#antlr4-runtime;4.9.3 from central in [default]
+	---------------------------------------------------------------------
+	|                  |            modules            ||   artifacts   |
+	|       conf       | number| search|dwnlded|evicted|| number|dwnlded|
+	---------------------------------------------------------------------
+	|      default     |   3   |   0   |   0   |   0   ||   3   |   0   |
+	---------------------------------------------------------------------
+:: retrieving :: org.apache.spark#spark-submit-parent-fd547b2f-3e0f-4420-bb1c-52e2631eb2ab
+	confs: [default]
+	0 artifacts copied, 3 already retrieved (0kB/6ms)
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+rows=48,200  columns=14
+-RECORD 0-------------------------------
+ trip_id          | 0.0
+ driver_id        | 0.0
+ rider_id         | 0.0
+ city             | 0.0
+ start_ts         | 0.0
+ end_ts           | 0.0
+ distance_km      | 0.0
+ fare_sar         | 0.0
+ status           | 0.0
+ surge_multiplier | 0.0
+ payment_method   | 0.0
+ dropoff_geohash  | 0.03037344398340249
+ _ingested_at     | 0.0
+ _source_file     | 0.0
+
+duplicate trip_id groups: 0

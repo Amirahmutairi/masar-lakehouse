@@ -1,0 +1,274 @@
+.venv/bin/python -m masar.pipeline
+:: loading settings :: url = jar:file:/workspaces/masar-lakehouse/.venv/lib/python3.11/site-packages/pyspark/jars/ivy-2.5.1.jar!/org/apache/ivy/core/settings/ivysettings.xml
+Ivy Default Cache set to: /home/vscode/.ivy2/cache
+The jars for the packages stored in: /home/vscode/.ivy2/jars
+io.delta#delta-spark_2.12 added as a dependency
+:: resolving dependencies :: org.apache.spark#spark-submit-parent-6e202ae6-34b8-4f34-b2fc-0fa8e581e580;1.0
+	confs: [default]
+	found io.delta#delta-spark_2.12;3.2.0 in central
+	found io.delta#delta-storage;3.2.0 in central
+	found org.antlr#antlr4-runtime;4.9.3 in central
+:: resolution report :: resolve 180ms :: artifacts dl 8ms
+	:: modules in use:
+	io.delta#delta-spark_2.12;3.2.0 from central in [default]
+	io.delta#delta-storage;3.2.0 from central in [default]
+	org.antlr#antlr4-runtime;4.9.3 from central in [default]
+	---------------------------------------------------------------------
+	|                  |            modules            ||   artifacts   |
+	|       conf       | number| search|dwnlded|evicted|| number|dwnlded|
+	---------------------------------------------------------------------
+	|      default     |   3   |   0   |   0   |   0   ||   3   |   0   |
+	---------------------------------------------------------------------
+:: retrieving :: org.apache.spark#spark-submit-parent-6e202ae6-34b8-4f34-b2fc-0fa8e581e580
+	confs: [default]
+	0 artifacts copied, 3 already retrieved (0kB/5ms)
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+registered bronze.trips
+registered bronze.drivers
+registered bronze.gps_pings
+[0m15:56:31  Running with dbt=1.8.10
+[0m15:56:31  This version of dbt is deprecated and no longer receives regular patches, including for known bugs. We recommend upgrading to a newer supported version of dbt: https://docs.getdbt.com/docs/dbt-versions
+[0m15:56:32  Registered adapter: spark=1.8.0
+[0m15:56:32  Found 3 models, 5 data tests, 2 sources, 588 macros
+[0m15:56:32
+:: loading settings :: url = jar:file:/workspaces/masar-lakehouse/.venv/lib/python3.11/site-packages/pyspark/jars/ivy-2.5.1.jar!/org/apache/ivy/core/settings/ivysettings.xml
+Ivy Default Cache set to: /home/vscode/.ivy2/cache
+The jars for the packages stored in: /home/vscode/.ivy2/jars
+io.delta#delta-spark_2.12 added as a dependency
+:: resolving dependencies :: org.apache.spark#spark-submit-parent-7a7bbbe0-825a-4720-b743-b644dbeed138;1.0
+	confs: [default]
+	found io.delta#delta-spark_2.12;3.2.0 in central
+	found io.delta#delta-storage;3.2.0 in central
+	found org.antlr#antlr4-runtime;4.9.3 in central
+:: resolution report :: resolve 169ms :: artifacts dl 9ms
+	:: modules in use:
+	io.delta#delta-spark_2.12;3.2.0 from central in [default]
+	io.delta#delta-storage;3.2.0 from central in [default]
+	org.antlr#antlr4-runtime;4.9.3 from central in [default]
+	---------------------------------------------------------------------
+	|                  |            modules            ||   artifacts   |
+	|       conf       | number| search|dwnlded|evicted|| number|dwnlded|
+	---------------------------------------------------------------------
+	|      default     |   3   |   0   |   0   |   0   ||   3   |   0   |
+	---------------------------------------------------------------------
+:: retrieving :: org.apache.spark#spark-submit-parent-7a7bbbe0-825a-4720-b743-b644dbeed138
+	confs: [default]
+	0 artifacts copied, 3 already retrieved (0kB/6ms)
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+[0m15:56:40  Concurrency: 1 threads (target='dev')
+[0m15:56:40
+[0m15:56:41  1 of 1 START sql incremental model silver.trips ................................ [RUN]
+
+[Stage 5:>                                                         (0 + 4) / 50]
+
+[Stage 5:====>                                                     (4 + 4) / 50]
+
+[Stage 5:========>                                                 (7 + 4) / 50]
+
+[Stage 5:===========>                                             (10 + 5) / 50]
+
+[Stage 5:==================>                                      (16 + 4) / 50]
+
+[Stage 5:=======================>                                 (21 + 4) / 50]
+
+[Stage 5:==============================>                          (27 + 4) / 50]
+
+[Stage 5:====================================>                    (32 + 4) / 50]
+
+[Stage 5:===========================================>             (38 + 4) / 50]
+
+[Stage 5:===================================================>     (45 + 4) / 50]
+
+
+
+[Stage 13:================>                                       (15 + 5) / 50]
+
+[Stage 13:=========================>                              (23 + 4) / 50]
+
+[Stage 13:==================================>                     (31 + 4) / 50]
+
+[Stage 13:============================================>           (40 + 4) / 50]
+
+
+
+[Stage 16:=============================>                          (26 + 4) / 50]
+
+[Stage 16:========================================>               (36 + 4) / 50]
+
+[Stage 16:=================================================>      (44 + 4) / 50]
+
+
+
+[Stage 23:=============================>                            (1 + 1) / 2]
+
+
+
+[Stage 25:====================================================>   (47 + 3) / 50]
+
+
+
+[Stage 37:>                                                         (0 + 4) / 7]
+
+[Stage 37:================>                                         (2 + 4) / 7]
+
+[Stage 37:========================>                                 (3 + 4) / 7]
+
+[Stage 37:=================================>                        (4 + 3) / 7]
+
+
+[0m15:57:02  1 of 1 OK created sql incremental model silver.trips ........................... [[32mOK[0m in 21.96s]
+[0m15:57:02
+[0m15:57:02  Finished running 1 incremental model in 0 hours 0 minutes and 30.31 seconds (30.31s).
+[0m15:57:03
+[0m15:57:03  [32mCompleted successfully[0m
+[0m15:57:03
+:: loading settings :: url = jar:file:/workspaces/masar-lakehouse/.venv/lib/python3.11/site-packages/pyspark/jars/ivy-2.5.1.jar!/org/apache/ivy/core/settings/ivysettings.xml
+Ivy Default Cache set to: /home/vscode/.ivy2/cache
+The jars for the packages stored in: /home/vscode/.ivy2/jars
+io.delta#delta-spark_2.12 added as a dependency
+:: resolving dependencies :: org.apache.spark#spark-submit-parent-42e0b040-db5d-49d1-8787-db72cdb1336c;1.0
+	confs: [default]
+	found io.delta#delta-spark_2.12;3.2.0 in central
+	found io.delta#delta-storage;3.2.0 in central
+	found org.antlr#antlr4-runtime;4.9.3 in central
+:: resolution report :: resolve 186ms :: artifacts dl 14ms
+	:: modules in use:
+	io.delta#delta-spark_2.12;3.2.0 from central in [default]
+	io.delta#delta-storage;3.2.0 from central in [default]
+	org.antlr#antlr4-runtime;4.9.3 from central in [default]
+	---------------------------------------------------------------------
+	|                  |            modules            ||   artifacts   |
+	|       conf       | number| search|dwnlded|evicted|| number|dwnlded|
+	---------------------------------------------------------------------
+	|      default     |   3   |   0   |   0   |   0   ||   3   |   0   |
+	---------------------------------------------------------------------
+:: retrieving :: org.apache.spark#spark-submit-parent-42e0b040-db5d-49d1-8787-db72cdb1336c
+	confs: [default]
+	0 artifacts copied, 3 already retrieved (0kB/6ms)
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+  bronze already landed: skipping
+[land_bronze] OK
+[register_bronze] OK
+[build_silver] OK
+
+Calculating Metrics:   0%|          | 0/8 [00:00<?, ?it/s]
+Calculating Metrics:   0%|          | 0/8 [00:00<?, ?it/s]
+Calculating Metrics:  25%|██▌       | 2/8 [00:00<00:00, 107.02it/s]
+Calculating Metrics:  25%|██▌       | 2/8 [00:00<00:00, 90.21it/s]
+Calculating Metrics:  50%|█████     | 4/8 [00:01<00:01,  2.94it/s]
+Calculating Metrics:  50%|█████     | 4/8 [00:01<00:01,  2.94it/s]
+Calculating Metrics:  50%|█████     | 4/8 [00:01<00:01,  2.94it/s]
+Calculating Metrics:  62%|██████▎   | 5/8 [00:01<00:01,  2.94it/s]
+Calculating Metrics:  62%|██████▎   | 5/8 [00:01<00:01,  2.94it/s]
+Calculating Metrics:  88%|████████▊ | 7/8 [00:01<00:00,  5.20it/s]
+Calculating Metrics:  88%|████████▊ | 7/8 [00:01<00:00,  5.20it/s]
+Calculating Metrics:  88%|████████▊ | 7/8 [00:01<00:00,  5.20it/s]
+Calculating Metrics: 100%|██████████| 8/8 [00:01<00:00,  5.20it/s]
+Calculating Metrics: 100%|██████████| 8/8 [00:01<00:00,  5.20it/s]
+Calculating Metrics: 100%|██████████| 8/8 [00:01<00:00,  5.20it/s]
+Calculating Metrics: 100%|██████████| 8/8 [00:01<00:00,  4.72it/s]
+
+Calculating Metrics:   0%|          | 0/10 [00:00<?, ?it/s]
+Calculating Metrics:   0%|          | 0/10 [00:00<?, ?it/s]
+Calculating Metrics:  20%|██        | 2/10 [00:00<00:00, 643.64it/s]
+Calculating Metrics:  20%|██        | 2/10 [00:00<00:00, 270.91it/s]
+Calculating Metrics:  40%|████      | 4/10 [00:00<00:00, 39.89it/s]
+Calculating Metrics:  40%|████      | 4/10 [00:00<00:00, 39.89it/s]
+Calculating Metrics:  40%|████      | 4/10 [00:00<00:00, 39.89it/s]
+Calculating Metrics:  60%|██████    | 6/10 [00:00<00:00, 39.89it/s]
+Calculating Metrics:  60%|██████    | 6/10 [00:00<00:00, 39.89it/s]
+Calculating Metrics:  90%|█████████ | 9/10 [00:00<00:00,  8.51it/s]
+Calculating Metrics:  90%|█████████ | 9/10 [00:00<00:00,  8.51it/s]
+Calculating Metrics:  90%|█████████ | 9/10 [00:00<00:00,  8.51it/s]
+Calculating Metrics: 100%|██████████| 10/10 [00:01<00:00,  8.51it/s]
+Calculating Metrics: 100%|██████████| 10/10 [00:01<00:00,  8.51it/s]
+Calculating Metrics: 100%|██████████| 10/10 [00:01<00:00,  8.51it/s]
+Calculating Metrics: 100%|██████████| 10/10 [00:01<00:00,  9.38it/s]
+
+Calculating Metrics:   0%|          | 0/1 [00:00<?, ?it/s]
+Calculating Metrics:   0%|          | 0/1 [00:00<?, ?it/s]
+Calculating Metrics: 100%|██████████| 1/1 [00:00<00:00, 3048.19it/s]
+Calculating Metrics: 100%|██████████| 1/1 [00:00<00:00, 2065.14it/s]
+Calculating Metrics: 100%|██████████| 1/1 [00:00<00:00, 1769.75it/s]
+Calculating Metrics: 100%|██████████| 1/1 [00:00<00:00, 1518.57it/s]
+
+Calculating Metrics:   0%|          | 0/11 [00:00<?, ?it/s]
+Calculating Metrics:   0%|          | 0/11 [00:00<?, ?it/s]
+Calculating Metrics:  18%|█▊        | 2/11 [00:00<00:00, 668.41it/s]
+Calculating Metrics:  18%|█▊        | 2/11 [00:00<00:00, 273.62it/s]
+Calculating Metrics:  36%|███▋      | 4/11 [00:00<00:00, 43.85it/s]
+Calculating Metrics:  36%|███▋      | 4/11 [00:00<00:00, 41.80it/s]
+Calculating Metrics:  55%|█████▍    | 6/11 [00:00<00:00, 59.76it/s]
+Calculating Metrics:  55%|█████▍    | 6/11 [00:00<00:00, 59.76it/s]
+Calculating Metrics:  55%|█████▍    | 6/11 [00:00<00:00, 59.76it/s]
+Calculating Metrics:  82%|████████▏ | 9/11 [00:00<00:00, 59.76it/s]
+Calculating Metrics:  82%|████████▏ | 9/11 [00:00<00:00, 59.76it/s]
+Calculating Metrics: 100%|██████████| 11/11 [00:00<00:00, 59.76it/s]
+Calculating Metrics: 100%|██████████| 11/11 [00:00<00:00, 59.76it/s]
+Calculating Metrics: 100%|██████████| 11/11 [00:00<00:00, 59.76it/s]
+Calculating Metrics: 100%|██████████| 11/11 [00:00<00:00, 29.61it/s]
+
+Calculating Metrics:   0%|          | 0/11 [00:00<?, ?it/s]
+Calculating Metrics:   0%|          | 0/11 [00:00<?, ?it/s]
+Calculating Metrics:  18%|█▊        | 2/11 [00:00<00:00, 648.37it/s]
+Calculating Metrics:  18%|█▊        | 2/11 [00:00<00:00, 232.73it/s]
+Calculating Metrics:  36%|███▋      | 4/11 [00:00<00:00, 42.04it/s]
+Calculating Metrics:  36%|███▋      | 4/11 [00:00<00:00, 39.97it/s]
+Calculating Metrics:  36%|███▋      | 4/11 [00:00<00:00, 39.97it/s]
+Calculating Metrics:  55%|█████▍    | 6/11 [00:00<00:00, 39.97it/s]
+Calculating Metrics:  55%|█████▍    | 6/11 [00:00<00:00, 39.97it/s]
+Calculating Metrics:  82%|████████▏ | 9/11 [00:00<00:00, 33.76it/s]
+Calculating Metrics:  82%|████████▏ | 9/11 [00:00<00:00, 33.76it/s]
+Calculating Metrics:  82%|████████▏ | 9/11 [00:00<00:00, 33.76it/s]
+Calculating Metrics: 100%|██████████| 11/11 [00:00<00:00, 33.76it/s]
+Calculating Metrics: 100%|██████████| 11/11 [00:00<00:00, 33.76it/s]
+Calculating Metrics: 100%|██████████| 11/11 [00:00<00:00, 33.76it/s]
+Calculating Metrics: 100%|██████████| 11/11 [00:00<00:00, 29.26it/s]
+
+Calculating Metrics:   0%|          | 0/11 [00:00<?, ?it/s]
+Calculating Metrics:   0%|          | 0/11 [00:00<?, ?it/s]
+Calculating Metrics:  18%|█▊        | 2/11 [00:00<00:00, 898.33it/s]
+Calculating Metrics:  18%|█▊        | 2/11 [00:00<00:00, 362.41it/s]
+Calculating Metrics:  36%|███▋      | 4/11 [00:00<00:00, 41.56it/s]
+Calculating Metrics:  36%|███▋      | 4/11 [00:00<00:00, 39.13it/s]
+Calculating Metrics:  36%|███▋      | 4/11 [00:00<00:00, 39.13it/s]
+Calculating Metrics:  55%|█████▍    | 6/11 [00:00<00:00, 39.13it/s]
+Calculating Metrics:  55%|█████▍    | 6/11 [00:00<00:00, 39.13it/s]
+Calculating Metrics:  82%|████████▏ | 9/11 [00:00<00:00, 27.78it/s]
+Calculating Metrics:  82%|████████▏ | 9/11 [00:00<00:00, 27.78it/s]
+Calculating Metrics:  82%|████████▏ | 9/11 [00:00<00:00, 27.78it/s]
+Calculating Metrics: 100%|██████████| 11/11 [00:00<00:00, 27.78it/s]
+Calculating Metrics: 100%|██████████| 11/11 [00:00<00:00, 27.78it/s]
+Calculating Metrics: 100%|██████████| 11/11 [00:00<00:00, 27.78it/s]
+Calculating Metrics: 100%|██████████| 11/11 [00:00<00:00, 23.83it/s]
+
+Calculating Metrics:   0%|          | 0/6 [00:00<?, ?it/s]
+Calculating Metrics:   0%|          | 0/6 [00:00<?, ?it/s]
+Calculating Metrics:  33%|███▎      | 2/6 [00:00<00:00, 697.83it/s]
+Calculating Metrics:  33%|███▎      | 2/6 [00:00<00:00, 442.46it/s]
+Calculating Metrics:  67%|██████▋   | 4/6 [00:00<00:00, 36.62it/s]
+Calculating Metrics:  67%|██████▋   | 4/6 [00:00<00:00, 36.62it/s]
+Calculating Metrics:  67%|██████▋   | 4/6 [00:00<00:00, 36.62it/s]
+Calculating Metrics:  83%|████████▎ | 5/6 [00:00<00:00, 36.62it/s]
+Calculating Metrics:  83%|████████▎ | 5/6 [00:00<00:00, 36.62it/s]
+Calculating Metrics: 100%|██████████| 6/6 [00:00<00:00, 36.62it/s]
+Calculating Metrics: 100%|██████████| 6/6 [00:00<00:00, 36.62it/s]
+Calculating Metrics: 100%|██████████| 6/6 [00:00<00:00, 36.62it/s]
+Calculating Metrics: 100%|██████████| 6/6 [00:00<00:00, 24.25it/s]
+Deleted 0 files and directories in a total of 2 directories.
+Deleted 0 files and directories in a total of 1 directories.
+  trip_id_not_null   passed=True  bad_rows=0
+  trip_id_unique     passed=True  bad_rows=0
+  fare_is_double     passed=True  bad_rows=0
+  fare_positive      passed=True  bad_rows=0
+  city_known         passed=True  bad_rows=0
+  duration_sane      passed=True  bad_rows=0
+  fare_mean_sane     passed=True  bad_rows=0
+[quality_check] OK
+  zone_hourly_demand rows: 120
+[gold_zone_demand] OK
+  trip_features rows: 44,371
+[gold_trip_features] OK
+  maintained zone_hourly_demand
+  maintained trip_features
+[optimize_vacuum] OK

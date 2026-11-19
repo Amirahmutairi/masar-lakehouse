@@ -1,0 +1,69 @@
+:: loading settings :: url = jar:file:/workspaces/masar-lakehouse/.venv/lib/python3.11/site-packages/pyspark/jars/ivy-2.5.1.jar!/org/apache/ivy/core/settings/ivysettings.xml
+Ivy Default Cache set to: /home/vscode/.ivy2/cache
+The jars for the packages stored in: /home/vscode/.ivy2/jars
+io.delta#delta-spark_2.12 added as a dependency
+:: resolving dependencies :: org.apache.spark#spark-submit-parent-135a906f-f162-4ac3-9d0e-2483eacab705;1.0
+	confs: [default]
+	found io.delta#delta-spark_2.12;3.2.0 in central
+	found io.delta#delta-storage;3.2.0 in central
+	found org.antlr#antlr4-runtime;4.9.3 in central
+:: resolution report :: resolve 200ms :: artifacts dl 8ms
+	:: modules in use:
+	io.delta#delta-spark_2.12;3.2.0 from central in [default]
+	io.delta#delta-storage;3.2.0 from central in [default]
+	org.antlr#antlr4-runtime;4.9.3 from central in [default]
+	---------------------------------------------------------------------
+	|                  |            modules            ||   artifacts   |
+	|       conf       | number| search|dwnlded|evicted|| number|dwnlded|
+	---------------------------------------------------------------------
+	|      default     |   3   |   0   |   0   |   0   ||   3   |   0   |
+	---------------------------------------------------------------------
+:: retrieving :: org.apache.spark#spark-submit-parent-135a906f-f162-4ac3-9d0e-2483eacab705
+	confs: [default]
+	0 artifacts copied, 3 already retrieved (0kB/6ms)
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+=== WIDE plan (no select) ===
+== Physical Plan ==
+* Filter (3)
++- * ColumnarToRow (2)
+   +- Scan parquet  (1)
+
+
+(1) Scan parquet
+Output [14]: [trip_id#48, driver_id#49, rider_id#50, city#51, start_ts#52, end_ts#53, distance_km#54, fare_sar#55, status#56, surge_multiplier#57, payment_method#58, dropoff_geohash#59, _ingested_at#60, _source_file#61]
+Batched: true
+Location: PreparedDeltaFileIndex [file:/workspaces/masar-lakehouse/lakehouse/bronze/trips]
+PushedFilters: [IsNotNull(city), EqualTo(city,Riyadh)]
+ReadSchema: struct<trip_id:string,driver_id:string,rider_id:string,city:string,start_ts:string,end_ts:string,distance_km:string,fare_sar:string,status:string,surge_multiplier:string,payment_method:string,dropoff_geohash:string,_ingested_at:timestamp,_source_file:string>
+
+(2) ColumnarToRow [codegen id : 1]
+Input [14]: [trip_id#48, driver_id#49, rider_id#50, city#51, start_ts#52, end_ts#53, distance_km#54, fare_sar#55, status#56, surge_multiplier#57, payment_method#58, dropoff_geohash#59, _ingested_at#60, _source_file#61]
+
+(3) Filter [codegen id : 1]
+Input [14]: [trip_id#48, driver_id#49, rider_id#50, city#51, start_ts#52, end_ts#53, distance_km#54, fare_sar#55, status#56, surge_multiplier#57, payment_method#58, dropoff_geohash#59, _ingested_at#60, _source_file#61]
+Condition : (isnotnull(city#51) AND (city#51 = Riyadh))
+
+
+=== NARROW plan (3 columns) ===
+== Physical Plan ==
+* Filter (3)
++- * ColumnarToRow (2)
+   +- Scan parquet  (1)
+
+
+(1) Scan parquet
+Output [3]: [trip_id#48, city#51, fare_sar#55]
+Batched: true
+Location: PreparedDeltaFileIndex [file:/workspaces/masar-lakehouse/lakehouse/bronze/trips]
+PushedFilters: [IsNotNull(city), EqualTo(city,Riyadh)]
+ReadSchema: struct<trip_id:string,city:string,fare_sar:string>
+
+(2) ColumnarToRow [codegen id : 1]
+Input [3]: [trip_id#48, city#51, fare_sar#55]
+
+(3) Filter [codegen id : 1]
+Input [3]: [trip_id#48, city#51, fare_sar#55]
+Condition : (isnotnull(city#51) AND (city#51 = Riyadh))
+
+
+riyadh trips wide=18,440  narrow=18,440

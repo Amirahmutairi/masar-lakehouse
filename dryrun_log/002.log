@@ -1,0 +1,5 @@
+.venv/bin/python scripts/make_data.py --seed 42
+wrote data/raw/drivers.csv      1,850 rows
+wrote data/raw/trips_2026-06-01.csv     48,200 rows
+wrote data/raw/gps/sample.ndjson    120,000 pings
+wrote data/fixtures/ (dirty batches, late trip, corrections, erasure request)

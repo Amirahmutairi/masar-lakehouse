@@ -1,0 +1,8 @@
+lakehouse/bronze/trips:
+_delta_log
+part-00000-e4b6183d-ca23-4494-ba37-7feda2ff7c52-c000.snappy.parquet
+part-00001-a49c9cec-8188-4f5c-9c45-49a740d9941f-c000.snappy.parquet
+
+lakehouse/bronze/trips/_delta_log:
+00000000000000000000.json
+_commits

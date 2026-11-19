@@ -1,0 +1,507 @@
+=== #1 D1 rc=0 4s [## 0. Check your setup] make doctor
+      ✓ pandas                 2.3.3
+      ✓ pyarrow                18.1.0
+      ✓ git
+      ✓ docker (Day 2)         running
+    
+    All good. Next: make data
+    
+=== #2 D1 rc=0 3s [## 0. Check your setup] make data
+    .venv/bin/python scripts/make_data.py --seed 42
+    wrote data/raw/drivers.csv      1,850 rows
+    wrote data/raw/trips_2026-06-01.csv     48,200 rows
+    wrote data/raw/gps/sample.ndjson    120,000 pings
+    wrote data/fixtures/ (dirty batches, late trip, corrections, erasure request)
+    
+=== #3 D1 rc=0 9s [## 0. Check your setup] make test
+    .venv/bin/python -m pytest -q tests
+    ....                                                                     [100%]
+    4 passed in 9.07s
+    
+=== #4 D1 rc=0 0s [### Step 1. Look at the raw data] head -3 data/raw/trips_2026-06-01.csv
+    trip_id,driver_id,rider_id,city,start_ts,end_ts,distance_km,fare_sar,status,surge_multiplier,payment_method,dropoff_geohash
+    T-000001,D-0128,rider_11472,Riyadh,2026-06-01 20:16:33,2026-06-01 21:08:31,20.98,96.52,cancelled,1.0,cash,7z2y0h
+    T-000002,D-0189,rider_01093,Riyadh,2026-06-01 15:29:52,2026-06-01 15:59:02,10.77,53.84,completed,1.0,cash,7zd4hw
+    
+=== #5 D1 rc=0 0s [### Step 1. Look at the raw data] head -c 400 data/raw/gps/sample.ndjson
+    {"trip_id": "T-030347", "driver_id": "D-0476", "city": "Mecca", "lat": 21.464428, "lon": 39.936295, "event_ts": "2026-06-01T00:02:35Z"}
+    {"trip_id": "T-030347", "driver_id": "D-0476", "city": "Mecca", "lat": 21.464178, "lon": 39.935476, "event_ts": "2026-06-01T00:02:45Z"}
+    {"trip_id": "T-030347", "driver_id": "D-0476", "city": "Mecca", "lat": 21.464169, "lon": 39.936582, "event_ts": "2026-06-01T00:0
+=== #6 D1 rc=0 0s [### Step 1. Look at the raw data] head -3 data/raw/drivers.csv
+    driver_id,vehicle_type,driver_rating,city
+    D-0001,xl,5.0,Riyadh
+    D-0002,economy,4.96,Dammam
+    
+=== #7 D1 rc=0 18s [### Step 3. Run it once] python -m masar.ingest.land_bronze 2>&1 | grep -v WARN
+    	---------------------------------------------------------------------
+    :: retrieving :: org.apache.spark#spark-submit-parent-162018bb-09bf-42cd-80d4-22d0151e441c
+    	confs: [default]
+    	0 artifacts copied, 3 already retrieved (0kB/7ms)
+    To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+    landed
+    
+=== #8 D1 rc=0 0s [### Step 3. Run it once] ls lakehouse/bronze/trips lakehouse/bronze/trips/_delta_log
+    part-00000-e4b6183d-ca23-4494-ba37-7feda2ff7c52-c000.snappy.parquet
+    part-00001-a49c9cec-8188-4f5c-9c45-49a740d9941f-c000.snappy.parquet
+    
+    lakehouse/bronze/trips/_delta_log:
+    00000000000000000000.json
+    _commits
+    
+=== #9 D1 rc=0 18s [### Step 4. Profile what you landed] python -m masar.ingest.profile_bronze 2>&1 | grep -v WARN
+     payment_method   | 0.0
+     dropoff_geohash  | 0.03037344398340249
+     _ingested_at     | 0.0
+     _source_file     | 0.0
+    
+    duplicate trip_id groups: 0
+    
+=== #10 D1 rc=0 16s [### Checkpoint: the deliberate second run] python -m masar.ingest.land_bronze 2>&1 | grep -v WARN
+    	---------------------------------------------------------------------
+    :: retrieving :: org.apache.spark#spark-submit-parent-ed7a55ad-7387-48a2-bbd2-ba30b0524aa0
+    	confs: [default]
+    	0 artifacts copied, 3 already retrieved (0kB/6ms)
+    To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+    landed
+    
+=== #11 D1 rc=0 19s [### Checkpoint: the deliberate second run] python -m masar.ingest.profile_bronze 2>&1 | grep -v WARN
+     payment_method   | 0.0
+     dropoff_geohash  | 0.03037344398340249
+     _ingested_at     | 0.0
+     _source_file     | 0.0
+    
+    duplicate trip_id groups: 48,200
+    
+=== #12 D1 rc=0 0s [### Checkpoint: the deliberate second run] rm -rf lakehouse/bronze
+    
+=== #13 D1 rc=0 16s [### Checkpoint: the deliberate second run] python -m masar.ingest.land_bronze 2>&1 | grep -v WARN
+    	---------------------------------------------------------------------
+    :: retrieving :: org.apache.spark#spark-submit-parent-9aa16df2-1db3-4da5-ad17-65fa5ad88b2b
+    	confs: [default]
+    	0 artifacts copied, 3 already retrieved (0kB/11ms)
+    To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+    landed
+    
+=== #14 D1 rc=0 30s [## L1: the same data in three formats] python -m masar.econ.formats_lab 2>&1 | grep -v WARN
+    format    size MB   avg fare by city (s)  transaction log  bad append
+    csv           9.8                   0.55  no               accepted silently
+    parquet       1.9                   0.18  no               accepted silently
+    delta         1.9                   0.44  yes              REJECTED (AnalysisException)
+    
+    clean up:  rm -rf lakehouse/scratch/formats
+    
+=== #15 D1 rc=0 0s [## L1: the same data in three formats] rm -rf lakehouse/scratch/formats
+    
+=== #16 D1 rc=0 17s [### Step 1. Compare two query plans] python -m masar.econ.scan_cost 2>&1 | grep -v WARN
+    (3) Filter [codegen id : 1]
+    Input [3]: [trip_id#48, city#51, fare_sar#55]
+    Condition : (isnotnull(city#51) AND (city#51 = Riyadh))
+    
+    
+    riyadh trips wide=18,440  narrow=18,440
+    
+=== #17 D1 rc=1 0s [### Step 2. Price the platform] python -m masar.econ.cost_model
+    /workspaces/masar-lakehouse/.venv/bin/python: No module named masar.econ.cost_model
+    
+--- D2 SKIP [## Start here only if you did not do Day 1] make data
+--- D2 SKIP [## Start here only if you did not do Day 1] python -m masar.ingest.land_bronze 2>&1 | grep -v WARN
+=== #18 D2 rc=0 16s [### Step 0. Prerequisites] make register
+    	confs: [default]
+    	0 artifacts copied, 3 already retrieved (0kB/7ms)
+    To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+    registered bronze.trips
+    registered bronze.drivers
+    registered bronze.gps_pings
+    
+=== #19 D2 rc=2 0s [### Step 0. Prerequisites] make dbt-deps
+    cd dbt/masar && .venv/bin/dbt deps
+    /bin/sh: 1: .venv/bin/dbt: not found
+    make: *** [Makefile:46: dbt-deps] Error 127
+    
+=== #20 D2 rc=2 0s [### Step 0. Prerequisites] make dbt-debug
+    cd dbt/masar && .venv/bin/dbt debug
+    /bin/sh: 1: .venv/bin/dbt: not found
+    make: *** [Makefile:49: dbt-debug] Error 127
+    
+=== #21 D2 rc=0 0s [### Step 3. Run staging] cd dbt/masar
+    
+=== #22 D2 rc=0 27s [### Step 3. Run staging] dbt source freshness
+    
+    
+    [0m15:43:31  1 of 1 PASS freshness of bronze.trips .......................................... [[32mPASS[0m in 10.46s]
+    [0m15:43:31
+    [0m15:43:31  Finished running 1 source in 0 hours 0 minutes and 18.77 seconds (18.77s).
+    [0m15:43:31  Done.
+    
+=== #23 D2 rc=0 17s [### Step 3. Run staging] dbt run --select stg_trips stg_drivers
+    [0m15:43:49  2 of 2 OK created sql view model default.stg_trips ............................. [[32mOK[0m in 0.49s]
+    [0m15:43:49
+    [0m15:43:49  Finished running 2 view models in 0 hours 0 minutes and 12.58 seconds (12.58s).
+    [0m15:43:49
+    [0m15:43:49  [32mCompleted successfully[0m
+    [0m15:43:49
+    
+=== #24 D2 rc=0 0s [### Step 3. Run staging] cd ../..
+    
+=== #25 D2 rc=0 21s [### Hour 3 checkpoint] python - <<'EOF' 2>&1 | grep -v WARN
+    :: retrieving :: org.apache.spark#spark-submit-parent-e4367ee0-2f1d-4235-89e6-e05640f44c86
+    	confs: [default]
+    	0 artifacts copied, 3 already retrieved (0kB/6ms)
+    To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+    [Row(n=48200, u=48200)]
+    [Row(count(1)=1850)]
+    
+=== #26 D2 rc=0 0s [### Step 6. Build and test] cd dbt/masar
+    
+=== #27 D2 rc=0 30s [### Step 6. Build and test] dbt run --select silver_trips
+    [0m15:44:41  1 of 1 OK created sql incremental model silver.trips ........................... [[32mOK[0m in 16.92s]
+    [0m15:44:41
+    [0m15:44:41  Finished running 1 incremental model in 0 hours 0 minutes and 25.77 seconds (25.77s).
+    [0m15:44:41
+    [0m15:44:41  [32mCompleted successfully[0m
+    [0m15:44:41
+    
+=== #28 D2 rc=0 29s [### Step 6. Build and test] dbt test --select silver_trips
+    [0m15:45:10  5 of 5 PASS unique_silver_trips_trip_id ........................................ [[32mPASS[0m in 0.97s]
+    [0m15:45:10
+    [0m15:45:10  Finished running 5 data tests in 0 hours 0 minutes and 24.15 seconds (24.15s).
+    [0m15:45:10
+    [0m15:45:10  [32mCompleted successfully[0m
+    [0m15:45:10
+    
+=== #29 D2 rc=0 0s [### Step 6. Build and test] cd ../..
+    
+--- D2 SKIP [### Step 7. The late-trip drill (trainer demonstration)] python -c "from masar.ingest.land_bronze import land_trips; land_trips
+--- D2 SKIP [### Step 7. The late-trip drill (trainer demonstration)] cd dbt/masar && dbt run --select silver_trips && cd ../..
+--- D2 SKIP [### Step 7. The late-trip drill (trainer demonstration)] python - <<'EOF' 2>&1 | grep -v WARN
+--- D2 SKIP [### Step 7. The late-trip drill (trainer demonstration)] cd dbt/masar && dbt run --select silver_trips && cd ../..
+=== #30 D2 rc=0 23s [### Hour 4, Step 1. Add the constraints] python -m masar.delta.enforce_silver 2>&1 | grep -v WARN
+    |delta.constraints.positive_fare |fare_sar > 0         |
+    |delta.constraints.valid_duration|ended_at > started_at|
+    |delta.minReaderVersion          |1                    |
+    |delta.minWriterVersion          |3                    |
+    +--------------------------------+---------------------+
+    
+    
+=== #31 D2 rc=0 21s [### Step 2. Break it on purpose] python -m masar.delta.break_it 2>&1 | grep -v WARN
+     - fare_sar : -86.04
+    	at org.apache.spark.sql.delta.schema.DeltaInvariant
+    after bad fares: 44371
+    REJECTED: AnalysisException [DELTA_CONSTRAINT_DATA_TYPE_MISMATCH] Column fare_sar has data type DOUBLE and cannot be altered to data type STRING because this co
+    delta.constraints.positive_fare -> fare_sar > 0
+    after bad type: 44371
+    
+=== #32 D2 rc=0 0s [### Step 3. Read the transaction log] ls lakehouse/silver/trips/_delta_log
+    00000000000000000000.json
+    00000000000000000001.json
+    00000000000000000002.json
+    _commits
+    
+=== #33 D2 rc=0 0s [### Step 3. Read the transaction log] grep -o '"delta.constraints[^}]*' lakehouse/silver/trips/_delta_log/*.json | head
+    lakehouse/silver/trips/_delta_log/00000000000000000001.json:"delta.constraints.positive_fare":"fare_sar > 0"
+    lakehouse/silver/trips/_delta_log/00000000000000000002.json:"delta.constraints.positive_fare":"fare_sar > 0","delta.constraints.valid_duration":"ended_at > star
+    
+=== #34 D2 rc=0 22s [### Hour 5, Step 4. Evolve a schema on purpose] python -m masar.delta.evolve_demo 2>&1 | grep -v WARN
+    |T-036927|      NULL|
+    |T-036928|      NULL|
+    |T-036929|      NULL|
+    |T-036930|      NULL|
+    +--------+----------+
+    
+    
+--- D3 SKIP [## Start here only if you did not do Days 1 and 2] make data
+--- D3 SKIP [## Start here only if you did not do Days 1 and 2] python -m masar.ingest.land_bronze 2>&1 | grep -v WARN
+--- D3 SKIP [## Start here only if you did not do Days 1 and 2] make register
+--- D3 SKIP [## Start here only if you did not do Days 1 and 2] make dbt-deps
+--- D3 SKIP [## Start here only if you did not do Days 1 and 2] cd dbt/masar && dbt run && dbt test && cd ../..
+--- D3 SKIP [## Start here only if you did not do Days 1 and 2] python -m masar.delta.enforce_silver 2>&1 | grep -v WARN
+=== #35 D3 rc=0 24s [### Hour 1, Step 1. The corrections MERGE] python -m masar.delta.merge_ops corrections 2>&1 | grep -v WARN
+    |T-000003|   42.33|
+    |T-000004|   49.66|
+    |T-000005|   96.73|
+    |T-000006|   74.66|
+    +--------+--------+
+    
+    
+=== #36 D3 rc=0 20s [### Hour 1, Step 1. The corrections MERGE] python -m masar.delta.merge_ops corrections 2>&1 | grep -v WARN
+    |T-000003|   42.33|
+    |T-000004|   49.66|
+    |T-000005|   96.73|
+    |T-000006|   74.66|
+    +--------+--------+
+    
+    
+=== #37 D3 rc=0 22s [### Hour 1, Step 2. Erase a rider] python -m masar.delta.merge_ops erase 2>&1 | grep -v WARN
+    	---------------------------------------------------------------------
+    :: retrieving :: org.apache.spark#spark-submit-parent-cc54d316-3253-49ed-8505-51a4291bb9c7
+    	confs: [default]
+    	0 artifacts copied, 3 already retrieved (0kB/6ms)
+    To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+    erased rider_00042: v4 deleted=7  rows 44371 -> 44364
+    
+=== #38 D3 rc=0 11s [### Hour 2, Step 3. Time travel] python -m masar.delta.time_travel history 2>&1 | grep -v WARN
+    |1      |2026-11-19 15:45:31.633|ADD CONSTRAINT                   |NULL   |NULL   |
+    |2      |2026-11-19 15:45:34.797|ADD CONSTRAINT                   |NULL   |NULL   |
+    |3      |2026-11-19 15:46:40.856|MERGE                            |5      |NULL   |
+    |4      |2026-11-19 15:47:23.833|DELETE                           |NULL   |7      |
+    +-------+-----------------------+---------------------------------+-------+-------+
+    
+    
+=== #39 D3 rc=0 24s [### Hour 2, Step 3. Time travel] python -m masar.delta.time_travel rider 2>&1 | grep -v WARN
+    To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+    v0: rider_00042 rows = 7
+    v1: rider_00042 rows = 7
+    v2: rider_00042 rows = 7
+    v3: rider_00042 rows = 7
+    v4: rider_00042 rows = 0
+    
+=== #40 D3 rc=0 105s [### Hour 3, Steps 4 and 5. Small files, OPTIMIZE, VACUUM] python -m masar.delta.small_files make 2>&1 | grep -v WARN
+    	---------------------------------------------------------------------
+    :: retrieving :: org.apache.spark#spark-submit-parent-a6f928bd-c8b4-43a9-9b29-2f5a040bede6
+    	confs: [default]
+    	0 artifacts copied, 3 already retrieved (0kB/6ms)
+    To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+    after appends: numFiles=100  sizeInBytes=633044
+    
+=== #41 D3 rc=0 66s [### Hour 3, Steps 4 and 5. Small files, OPTIMIZE, VACUUM] python -m masar.delta.small_files maintain 2>&1 | grep -v WARN
+    VACUUM dry run (files it would delete at 168h retention):
+    +----+
+    |path|
+    +----+
+    +----+
+    
+    
+--- D3 SKIP [### Hour 4, Step 1. Start Kafka and create the topic] docker --version && docker compose version
+--- D3 SKIP [### Hour 4, Step 1. Start Kafka and create the topic] make kafka-up
+--- D3 SKIP [### Hour 4, Step 1. Start Kafka and create the topic] make kafka-topic
+--- D3 SKIP [### Hour 4, Step 1. Start Kafka and create the topic] docker compose exec kafka /opt/kafka/bin/kafka-topics.sh --describe --
+--- D3 SKIP [### Step 2. Produce GPS pings] python -m masar.stream.gps_producer 2000
+--- D3 SKIP [### Step 3. Check the data in Kafka] docker compose exec kafka /opt/kafka/bin/kafka-console-consumer.sh --t
+--- D3 SKIP [### Step 3. Check the data in Kafka] docker compose exec kafka /opt/kafka/bin/kafka-get-offsets.sh --topic 
+--- D3 SKIP [### Hour 5, Steps 4 and 5. Stream Kafka into bronze] python -m masar.stream.ingest_gps_stream 2>&1 | grep -v WARN
+=== #42 D3 rc=0 0s [### Step 6. Watch the commits arrive] ls lakehouse/bronze/gps_stream/_delta_log | wc -l
+    ls: cannot access 'lakehouse/bronze/gps_stream/_delta_log': No such file or directory
+    0
+    
+--- D3 SKIP [### Checkpoint: kill and restart] python -m masar.stream.gps_producer 2000
+--- D3 SKIP [### Checkpoint: kill and restart] python -m masar.stream.ingest_gps_stream 2>&1 | grep -v WARN
+=== #43 D3 rc=0 5s [### Checkpoint: kill and restart] python - <<'EOF' 2>&1 | grep -v WARN
+      File "/workspaces/masar-lakehouse/.venv/lib/python3.11/site-packages/py4j/java_gateway.py", line 1322, in __call__
+        return_value = get_return_value(
+                       ^^^^^^^^^^^^^^^^^
+      File "/workspaces/masar-lakehouse/.venv/lib/python3.11/site-packages/pyspark/errors/exceptions/captured.py", line 185, in deco
+        raise converted from None
+    pyspark.errors.exceptions.captured.AnalysisException: [DELTA_MISSING_DELTA_TABLE] `/workspaces/masar-lakehouse/lakehouse/bronze/gps_stream` is not a Delta table
+    
+--- D3 SKIP [### Step 7. Windowed counts] python -m masar.stream.ping_windows 2>&1 | grep -v WARN
+--- D3 SKIP [## End of day] make kafka-down
+=== #44 D4 rc=0 25s [### Hour 1, Step 1. The data contract] python -m masar.quality.contract silver 2>&1 | grep -v WARN
+    trip_id_unique     passed=True   bad_rows=0
+    fare_is_double     passed=True   bad_rows=0
+    fare_positive      passed=True   bad_rows=0
+    city_known         passed=True   bad_rows=0
+    duration_sane      passed=True   bad_rows=0
+    fare_mean_sane     passed=True   bad_rows=0  observed=60.22344648814373
+    
+=== #45 D4 rc=0 20s [### Hour 1, Step 1. The data contract] python -m masar.quality.contract data/fixtures/dirty_batch_keys_null.parquet 2>&1 | grep -
+    trip_id_unique     passed=True   bad_rows=0
+    fare_is_double     passed=True   bad_rows=0
+    fare_positive      passed=True   bad_rows=0
+    city_known         passed=True   bad_rows=0
+    duration_sane      passed=True   bad_rows=0
+    fare_mean_sane     passed=True   bad_rows=0  observed=60.22074417975701
+    
+=== #46 D4 rc=0 20s [### Hour 1, Step 2. The gate] python -m masar.quality.gate data/fixtures/dirty_batch_keys_null.parquet 2>&1 | grep -v WA
+      File "<frozen runpy>", line 88, in _run_code
+      File "/workspaces/masar-lakehouse/src/masar/quality/gate.py", line 61, in <module>
+        gate_and_promote(load(batch), target)
+      File "/workspaces/masar-lakehouse/src/masar/quality/gate.py", line 21, in gate_and_promote
+        raise RuntimeError(f"FAIL-FAST: integrity checks failed {broken}; batch blocked, nothing promoted")
+    RuntimeError: FAIL-FAST: integrity checks failed ['trip_id_not_null']; batch blocked, nothing promoted
+    
+=== #47 D4 rc=0 29s [### Hour 1, Step 2. The gate] python -m masar.quality.gate data/fixtures/dirty_batch_bad_fares.parquet 2>&1 | grep -v WA
+    Calculating Metrics: 100%|██████████| 6/6 [00:00<00:00, 39.92it/s]
+    Calculating Metrics: 100%|██████████| 6/6 [00:00<00:00, 39.92it/s]
+    Calculating Metrics: 100%|██████████| 6/6 [00:00<00:00, 39.92it/s]
+    Calculating Metrics: 100%|██████████| 6/6 [00:00<00:00, 22.40it/s]
+    [DATA-ALERT] quarantined 120 rows to /workspaces/masar-lakehouse/lakehouse/quarantine/trips
+    promoted 44,251 new rows to /workspaces/masar-lakehouse/lakehouse/scratch/silver_gated (table now 44,251)
+    
+=== #48 D4 rc=0 0s [### Hour 1, Step 2. The gate] rm -rf lakehouse/quarantine lakehouse/scratch/silver_gated
+    
+=== #49 D4 rc=0 21s [### Hour 2, Step 3. Freshness, volume and drift] python - <<'EOF' 2>&1 | grep -v WARN
+    	---------------------------------------------------------------------
+    :: retrieving :: org.apache.spark#spark-submit-parent-2e5bcbec-d04a-4220-8481-9d0d90676843
+    	confs: [default]
+    	0 artifacts copied, 3 already retrieved (0kB/6ms)
+    To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+    scratch copies ready
+    
+=== #50 D4 rc=0 16s [### Hour 2, Step 3. Freshness, volume and drift] python -m masar.quality.observe --check freshness 2>&1 | grep -v WARN
+    	---------------------------------------------------------------------
+    :: retrieving :: org.apache.spark#spark-submit-parent-bf5947ca-0687-4afd-bd2e-a76a3324f853
+    	confs: [default]
+    	0 artifacts copied, 3 already retrieved (0kB/6ms)
+    To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+    freshness ok: last updated 2026-11-19 15:41:53.047693
+    
+=== #51 D4 rc=0 16s [### Hour 2, Step 3. Freshness, volume and drift] python -m masar.quality.observe --check freshness --sla-hours 1000 2>&1 | grep -v WARN
+    	---------------------------------------------------------------------
+    :: retrieving :: org.apache.spark#spark-submit-parent-8268f46d-57e4-4de8-8f26-6d928fdf6181
+    	confs: [default]
+    	0 artifacts copied, 3 already retrieved (0kB/6ms)
+    To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+    freshness ok: last updated 2026-11-19 15:41:53.047693
+    
+=== #52 D4 rc=0 14s [### Hour 2, Step 3. Freshness, volume and drift] python -m masar.quality.observe --check volume --path lakehouse/scratch/silver_half 2>&1 |
+      File "<frozen runpy>", line 88, in _run_code
+      File "/workspaces/masar-lakehouse/src/masar/quality/observe.py", line 45, in <module>
+        check_volume(a.path, a.expected)
+      File "/workspaces/masar-lakehouse/src/masar/quality/observe.py", line 22, in check_volume
+        raise RuntimeError(f"VOLUME anomaly: {n:,} vs expected ~{expected:,}")
+    RuntimeError: VOLUME anomaly: 22,182 vs expected ~44,371
+    
+=== #53 D4 rc=0 15s [### Hour 2, Step 3. Freshness, volume and drift] python -m masar.quality.observe --check drift --path lakehouse/scratch/silver_drift 2>&1 |
+    	---------------------------------------------------------------------
+    :: retrieving :: org.apache.spark#spark-submit-parent-b8d8b68a-cef1-4b05-99b9-bad810112902
+    	confs: [default]
+    	0 artifacts copied, 3 already retrieved (0kB/6ms)
+    To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+    [DRIFT] fare mean 78.3 vs baseline 60.2
+    
+=== #54 D4 rc=0 0s [### Hour 2, Step 3. Freshness, volume and drift] rm -rf lakehouse/scratch/silver_half lakehouse/scratch/silver_drift
+    
+=== #55 D4 rc=0 19s [### Hour 3, Step 4. PII and retention] python - <<'EOF' 2>&1 | grep -v WARN
+    +--------------------+--------------------+
+    |min                 |max                 |
+    +--------------------+--------------------+
+    |2026-06-01T00:02:35Z|2026-06-02T00:15:53Z|
+    +--------------------+--------------------+
+    
+    
+=== #56 D4 rc=0 16s [### Hour 3, Step 4. PII and retention] python -m masar.quality.pii --path lakehouse/scratch/gps_retention 2>&1 | grep -v WARN
+    :: retrieving :: org.apache.spark#spark-submit-parent-8a8dcb67-af0f-4845-97c1-a992cc04e644
+    	confs: [default]
+    	0 artifacts copied, 3 already retrieved (0kB/6ms)
+    To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+    cutoff 2026-05-23: 0 of 120,000 rows are past 180 days
+    dry run: nothing deleted (add --apply)
+    
+=== #57 D4 rc=0 16s [### Hour 3, Step 4. PII and retention] python -m masar.quality.pii --path lakehouse/scratch/gps_retention --as-of "2026-11-28 12:
+    :: retrieving :: org.apache.spark#spark-submit-parent-27b1e291-ddc2-4dd3-8bfd-bbe9f1c4fce3
+    	confs: [default]
+    	0 artifacts copied, 3 already retrieved (0kB/6ms)
+    To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+    cutoff 2026-06-01: 43,319 of 120,000 rows are past 180 days
+    dry run: nothing deleted (add --apply)
+    
+=== #58 D4 rc=0 22s [### Hour 3, Step 4. PII and retention] python -m masar.quality.pii --path lakehouse/scratch/gps_retention --as-of "2026-11-28 12:
+    :: retrieving :: org.apache.spark#spark-submit-parent-80ddb17e-0b34-4b2a-9188-c71abbd17d53
+    	confs: [default]
+    	0 artifacts copied, 3 already retrieved (0kB/6ms)
+    To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+    cutoff 2026-06-01: 43,319 of 120,000 rows are past 180 days
+    deleted. table now 76,681 rows
+    
+=== #59 D4 rc=0 20s [### Hour 3, Step 4. PII and retention] python - <<'EOF' 2>&1 | grep -v WARN
+    :: retrieving :: org.apache.spark#spark-submit-parent-a309ad82-014f-4128-8b5f-5e879b02b51a
+    	confs: [default]
+    	0 artifacts copied, 3 already retrieved (0kB/6ms)
+    To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+    version 0: count=120,000  real read OK (checksum 960000)
+    version 1: count=76,681  real read OK (checksum 613448)
+    
+=== #60 D4 rc=0 44s [### Hour 3, Step 4. PII and retention] python -m masar.quality.pii --path lakehouse/scratch/gps_retention --as-of "2026-11-28 12:
+    	0 artifacts copied, 3 already retrieved (0kB/8ms)
+    To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+    Deleted 3 files and directories in a total of 1 directories.
+    cutoff 2026-06-01: 0 of 76,681 rows are past 180 days
+    deleted. table now 76,681 rows
+    vacuumed: old files physically removed
+    
+=== #61 D4 rc=0 0s [### Hour 3, Step 4. PII and retention] rm -rf lakehouse/scratch/gps_retention
+    
+=== #62 D4 rc=0 117s [## Tutorial 8: gold and one command (Hours 4 and 5)] make pipeline 2>&1 | grep -v WARN
+    [gold_zone_demand] OK
+      trip_features rows: 44,371
+    [gold_trip_features] OK
+      maintained zone_hourly_demand
+      maintained trip_features
+    [optimize_vacuum] OK
+    
+=== #63 D4 rc=0 22s [## Tutorial 8: gold and one command (Hours 4 and 5)] python - <<'EOF' 2>&1 | grep -v WARN
+    silver rows        : 44371
+    demand rows        : 120
+    demand sum(trips)  : 44371
+    demand grain dups  : 0
+    features rows      : 44371
+    features dup trips : 0
+    
+=== #64 D4 rc=0 120s [## Tutorial 8: gold and one command (Hours 4 and 5)] make pipeline 2>&1 | grep -v WARN | tail -12
+    [gold_zone_demand] OK
+      trip_features rows: 44,371
+    [gold_trip_features] OK
+      maintained zone_hourly_demand
+      maintained trip_features
+    [optimize_vacuum] OK
+    
+=== #65 D4 rc=0 16s [### Hour 5: failure drill] MASAR_FAIL_TASK=build_silver make pipeline 2>&1 | grep -v WARN
+    [register_bronze] OK
+    [build_silver] attempt 1 failed: injected failure
+    [build_silver] attempt 2 failed: injected failure
+    [build_silver] attempt 3 failed: injected failure
+    PIPELINE HALTED
+    make: *** [Makefile:62: pipeline] Error 1
+    
+=== #66 D4 rc=0 122s [### Hour 5: failure drill] make pipeline 2>&1 | grep -v WARN | tail -12
+    [gold_zone_demand] OK
+      trip_features rows: 44,371
+    [gold_trip_features] OK
+      maintained zone_hourly_demand
+      maintained trip_features
+    [optimize_vacuum] OK
+    
+=== #67 D4 rc=0 10s [### The finding: erased trips came back] python - <<'EOF' 2>&1 | grep -v WARN
+    |4      |DELETE                           |NULL                 |NULL                |NULL                |
+    |5      |MERGE                            |7                    |44364               |0                   |
+    |6      |MERGE                            |0                    |44371               |0                   |
+    |7      |MERGE                            |0                    |44371               |0                   |
+    +-------+---------------------------------+---------------------+--------------------+--------------------+
+    
+    
+--- D4 SKIP [## End of day] rm -rf lakehouse/scratch lakehouse/quarantine
+=== #68 D5 rc=0 0s [## Tutorial 9: serve AI and BI (Hour 1)] touch src/masar/serve/__init__.py
+    
+=== #69 D5 rc=0 21s [### Step 1. Training set] python -m masar.serve.training_join 2>&1 | grep -v WARN | tail -12
+    |T-000075|Dammam|2026-06-01 00:03:35|0         |1       |1.2             |2                  |v1              |63.483333|v1                         |
+    |T-037941|Dammam|2026-06-01 00:07:43|0         |1       |1.0             |3                  |v1              |17.400000|v1                         |
+    |T-037675|Dammam|2026-06-01 00:10:00|0         |1       |1.0             |4                  |v1              |26.216667|v1                         |
+    +--------+------+-------------------+----------+--------+----------------+-------------------+----------------+---------+---------------------------+
+    only showing top 5 rows
+    
+    
+=== #70 D5 rc=0 19s [### Step 2. A safe table for BI] python -m masar.serve.bi_view 2>&1 | grep -v WARN
+    :: retrieving :: org.apache.spark#spark-submit-parent-a38c6256-484b-44da-83a9-3c268c59789a
+    	confs: [default]
+    	0 artifacts copied, 3 already retrieved (0kB/6ms)
+    To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+    bi_trips_safe rows: 44,371
+    columns: ['trip_id', 'city', 'rider_pseudonym', 'driver_pseudonym', 'dropoff_area', 'fare_sar', 'distance_km', 'duration_min', 'started_at']
+    
+=== #71 D5 rc=0 22s [### Step 2. A safe table for BI] python - <<'EOF' 2>&1 | grep -v WARN
+    | Mecca| 5388|
+    |Medina| 4356|
+    |Riyadh|16981|
+    +------+-----+
+    
+    unsalted guess matches: 0
+    
+=== #72 D5 rc=0 20s [### Step 3. The leakage drill] python -m masar.serve.leakage_drill 2>&1 | grep -v WARN | tail -5
+    To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+    rows: 44,371   label: duration_min   (held-out R2)
+      R2  0.000   A  prior-hour features only
+      R2  0.410   B  + fare_per_km
+      R2  0.000   C  + same-hour demand
+    
+--- D5 SKIP [## Minutes 60 to 260: capstone] git fetch origin capstone && git switch capstone
+DONE

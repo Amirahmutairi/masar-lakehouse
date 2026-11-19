@@ -1,0 +1,5 @@
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+rows: 44,371   label: duration_min   (held-out R2)
+  R2  0.000   A  prior-hour features only
+  R2  0.410   B  + fare_per_km
+  R2  0.000   C  + same-hour demand

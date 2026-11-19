@@ -1,0 +1,70 @@
+:: loading settings :: url = jar:file:/workspaces/masar-lakehouse/.venv/lib/python3.11/site-packages/pyspark/jars/ivy-2.5.1.jar!/org/apache/ivy/core/settings/ivysettings.xml
+Ivy Default Cache set to: /home/vscode/.ivy2/cache
+The jars for the packages stored in: /home/vscode/.ivy2/jars
+io.delta#delta-spark_2.12 added as a dependency
+:: resolving dependencies :: org.apache.spark#spark-submit-parent-ed80be36-b1c3-495e-917c-9d5beac3aba3;1.0
+	confs: [default]
+	found io.delta#delta-spark_2.12;3.2.0 in central
+	found io.delta#delta-storage;3.2.0 in central
+	found org.antlr#antlr4-runtime;4.9.3 in central
+:: resolution report :: resolve 170ms :: artifacts dl 9ms
+	:: modules in use:
+	io.delta#delta-spark_2.12;3.2.0 from central in [default]
+	io.delta#delta-storage;3.2.0 from central in [default]
+	org.antlr#antlr4-runtime;4.9.3 from central in [default]
+	---------------------------------------------------------------------
+	|                  |            modules            ||   artifacts   |
+	|       conf       | number| search|dwnlded|evicted|| number|dwnlded|
+	---------------------------------------------------------------------
+	|      default     |   3   |   0   |   0   |   0   ||   3   |   0   |
+	---------------------------------------------------------------------
+:: retrieving :: org.apache.spark#spark-submit-parent-ed80be36-b1c3-495e-917c-9d5beac3aba3
+	confs: [default]
+	0 artifacts copied, 3 already retrieved (0kB/6ms)
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+
+Calculating Metrics: 100%|██████████| 8/8 [00:03<00:00,  2.54it/s]
+Calculating Metrics: 100%|██████████| 8/8 [00:03<00:00,  2.54it/s]
+Calculating Metrics: 100%|██████████| 8/8 [00:03<00:00,  2.54it/s]
+Calculating Metrics: 100%|██████████| 8/8 [00:03<00:00,  2.54it/s]
+Calculating Metrics: 100%|██████████| 8/8 [00:03<00:00,  2.21it/s]
+
+Calculating Metrics: 100%|██████████| 10/10 [00:01<00:00,  5.47it/s]
+Calculating Metrics: 100%|██████████| 10/10 [00:01<00:00,  5.47it/s]
+Calculating Metrics: 100%|██████████| 10/10 [00:01<00:00,  5.47it/s]
+Calculating Metrics: 100%|██████████| 10/10 [00:01<00:00,  6.14it/s]
+
+Calculating Metrics:   0%|          | 0/1 [00:00<?, ?it/s]
+Calculating Metrics:   0%|          | 0/1 [00:00<?, ?it/s]
+Calculating Metrics: 100%|██████████| 1/1 [00:00<00:00, 3342.07it/s]
+Calculating Metrics: 100%|██████████| 1/1 [00:00<00:00, 2246.55it/s]
+Calculating Metrics: 100%|██████████| 1/1 [00:00<00:00, 1914.33it/s]
+Calculating Metrics: 100%|██████████| 1/1 [00:00<00:00, 1630.12it/s]
+
+Calculating Metrics: 100%|██████████| 11/11 [00:00<00:00, 24.40it/s]
+Calculating Metrics: 100%|██████████| 11/11 [00:00<00:00, 24.40it/s]
+Calculating Metrics: 100%|██████████| 11/11 [00:00<00:00, 24.40it/s]
+Calculating Metrics: 100%|██████████| 11/11 [00:00<00:00, 18.82it/s]
+
+Calculating Metrics: 100%|██████████| 11/11 [00:00<00:00, 24.72it/s]
+Calculating Metrics: 100%|██████████| 11/11 [00:00<00:00, 24.72it/s]
+Calculating Metrics: 100%|██████████| 11/11 [00:00<00:00, 24.72it/s]
+Calculating Metrics: 100%|██████████| 11/11 [00:00<00:00, 20.45it/s]
+
+Calculating Metrics: 100%|██████████| 11/11 [00:00<00:00, 24.86it/s]
+Calculating Metrics: 100%|██████████| 11/11 [00:00<00:00, 24.86it/s]
+Calculating Metrics: 100%|██████████| 11/11 [00:00<00:00, 24.86it/s]
+Calculating Metrics: 100%|██████████| 11/11 [00:00<00:00, 20.86it/s]
+
+Calculating Metrics: 100%|██████████| 6/6 [00:00<00:00, 37.31it/s]
+Calculating Metrics: 100%|██████████| 6/6 [00:00<00:00, 37.31it/s]
+Calculating Metrics: 100%|██████████| 6/6 [00:00<00:00, 37.31it/s]
+Calculating Metrics: 100%|██████████| 6/6 [00:00<00:00, 22.87it/s]
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/workspaces/masar-lakehouse/src/masar/quality/gate.py", line 61, in <module>
+    gate_and_promote(load(batch), target)
+  File "/workspaces/masar-lakehouse/src/masar/quality/gate.py", line 21, in gate_and_promote
+    raise RuntimeError(f"FAIL-FAST: integrity checks failed {broken}; batch blocked, nothing promoted")
+RuntimeError: FAIL-FAST: integrity checks failed ['trip_id_not_null']; batch blocked, nothing promoted

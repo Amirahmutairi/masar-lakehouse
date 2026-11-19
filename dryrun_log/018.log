@@ -1,0 +1,48 @@
+.venv/bin/python -m masar.register
+26/11/19 15:42:51 WARN Utils: Your hostname, codespaces-853c01 resolves to a loopback address: 127.0.0.1; using 10.0.0.101 instead (on interface eth0)
+26/11/19 15:42:51 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+:: loading settings :: url = jar:file:/workspaces/masar-lakehouse/.venv/lib/python3.11/site-packages/pyspark/jars/ivy-2.5.1.jar!/org/apache/ivy/core/settings/ivysettings.xml
+Ivy Default Cache set to: /home/vscode/.ivy2/cache
+The jars for the packages stored in: /home/vscode/.ivy2/jars
+io.delta#delta-spark_2.12 added as a dependency
+:: resolving dependencies :: org.apache.spark#spark-submit-parent-56ba3b37-62e1-44e0-ad26-9eb688e85877;1.0
+	confs: [default]
+	found io.delta#delta-spark_2.12;3.2.0 in central
+	found io.delta#delta-storage;3.2.0 in central
+	found org.antlr#antlr4-runtime;4.9.3 in central
+:: resolution report :: resolve 194ms :: artifacts dl 9ms
+	:: modules in use:
+	io.delta#delta-spark_2.12;3.2.0 from central in [default]
+	io.delta#delta-storage;3.2.0 from central in [default]
+	org.antlr#antlr4-runtime;4.9.3 from central in [default]
+	---------------------------------------------------------------------
+	|                  |            modules            ||   artifacts   |
+	|       conf       | number| search|dwnlded|evicted|| number|dwnlded|
+	---------------------------------------------------------------------
+	|      default     |   3   |   0   |   0   |   0   ||   3   |   0   |
+	---------------------------------------------------------------------
+:: retrieving :: org.apache.spark#spark-submit-parent-56ba3b37-62e1-44e0-ad26-9eb688e85877
+	confs: [default]
+	0 artifacts copied, 3 already retrieved (0kB/7ms)
+26/11/19 15:42:52 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+26/11/19 15:42:56 WARN HiveConf: HiveConf of name hive.stats.jdbc.timeout does not exist
+26/11/19 15:42:56 WARN HiveConf: HiveConf of name hive.stats.retries.wait does not exist
+26/11/19 15:43:00 WARN ObjectStore: Version information not found in metastore. hive.metastore.schema.verification is not enabled so recording the schema version 2.3.0
+26/11/19 15:43:00 WARN ObjectStore: setMetaStoreSchemaVersion called but recording version is disabled: version = 2.3.0, comment = Set by MetaStore vscode@127.0.0.1
+26/11/19 15:43:00 WARN ObjectStore: Failed to get database default, returning NoSuchObjectException
+26/11/19 15:43:00 WARN ObjectStore: Failed to get database bronze, returning NoSuchObjectException
+26/11/19 15:43:00 WARN ObjectStore: Failed to get database bronze, returning NoSuchObjectException
+26/11/19 15:43:00 WARN ObjectStore: Failed to get database global_temp, returning NoSuchObjectException
+26/11/19 15:43:00 WARN ObjectStore: Failed to get database bronze, returning NoSuchObjectException
+26/11/19 15:43:04 WARN HiveExternalCatalog: Couldn't find corresponding Hive SerDe for data source provider delta. Persisting data source table `spark_catalog`.`bronze`.`trips` into Hive metastore in Spark SQL specific format, which is NOT compatible with Hive.
+26/11/19 15:43:04 WARN SessionState: METASTORE_FILTER_HOOK will be ignored, since hive.security.authorization.manager is set to instance of HiveAuthorizerFactory.
+26/11/19 15:43:04 WARN HiveConf: HiveConf of name hive.internal.ss.authz.settings.applied.marker does not exist
+26/11/19 15:43:04 WARN HiveConf: HiveConf of name hive.stats.jdbc.timeout does not exist
+26/11/19 15:43:04 WARN HiveConf: HiveConf of name hive.stats.retries.wait does not exist
+26/11/19 15:43:05 WARN HiveExternalCatalog: Couldn't find corresponding Hive SerDe for data source provider delta. Persisting data source table `spark_catalog`.`bronze`.`drivers` into Hive metastore in Spark SQL specific format, which is NOT compatible with Hive.
+26/11/19 15:43:05 WARN HiveExternalCatalog: Couldn't find corresponding Hive SerDe for data source provider delta. Persisting data source table `spark_catalog`.`bronze`.`gps_pings` into Hive metastore in Spark SQL specific format, which is NOT compatible with Hive.
+registered bronze.trips
+registered bronze.drivers
+registered bronze.gps_pings

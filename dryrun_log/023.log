@@ -1,0 +1,63 @@
+[0m15:43:35  Running with dbt=1.8.10
+[0m15:43:35  This version of dbt is deprecated and no longer receives regular patches, including for known bugs. We recommend upgrading to a newer supported version of dbt: https://docs.getdbt.com/docs/dbt-versions
+[0m15:43:36  Registered adapter: spark=1.8.0
+[0m15:43:36  Found 3 models, 5 data tests, 2 sources, 588 macros
+[0m15:43:36
+26/11/19 15:43:37 WARN Utils: Your hostname, codespaces-853c01 resolves to a loopback address: 127.0.0.1; using 10.0.0.101 instead (on interface eth0)
+26/11/19 15:43:37 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+:: loading settings :: url = jar:file:/workspaces/masar-lakehouse/.venv/lib/python3.11/site-packages/pyspark/jars/ivy-2.5.1.jar!/org/apache/ivy/core/settings/ivysettings.xml
+Ivy Default Cache set to: /home/vscode/.ivy2/cache
+The jars for the packages stored in: /home/vscode/.ivy2/jars
+io.delta#delta-spark_2.12 added as a dependency
+:: resolving dependencies :: org.apache.spark#spark-submit-parent-84f6c0e2-8295-4304-a131-cbf21b85d897;1.0
+	confs: [default]
+	found io.delta#delta-spark_2.12;3.2.0 in central
+	found io.delta#delta-storage;3.2.0 in central
+	found org.antlr#antlr4-runtime;4.9.3 in central
+:: resolution report :: resolve 212ms :: artifacts dl 8ms
+	:: modules in use:
+	io.delta#delta-spark_2.12;3.2.0 from central in [default]
+	io.delta#delta-storage;3.2.0 from central in [default]
+	org.antlr#antlr4-runtime;4.9.3 from central in [default]
+	---------------------------------------------------------------------
+	|                  |            modules            ||   artifacts   |
+	|       conf       | number| search|dwnlded|evicted|| number|dwnlded|
+	---------------------------------------------------------------------
+	|      default     |   3   |   0   |   0   |   0   ||   3   |   0   |
+	---------------------------------------------------------------------
+:: retrieving :: org.apache.spark#spark-submit-parent-84f6c0e2-8295-4304-a131-cbf21b85d897
+	confs: [default]
+	0 artifacts copied, 3 already retrieved (0kB/7ms)
+26/11/19 15:43:38 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+26/11/19 15:43:41 WARN HiveConf: HiveConf of name hive.stats.jdbc.timeout does not exist
+26/11/19 15:43:41 WARN HiveConf: HiveConf of name hive.stats.retries.wait does not exist
+26/11/19 15:43:43 WARN ObjectStore: Version information not found in metastore. hive.metastore.schema.verification is not enabled so recording the schema version 2.3.0
+26/11/19 15:43:43 WARN ObjectStore: setMetaStoreSchemaVersion called but recording version is disabled: version = 2.3.0, comment = Set by MetaStore vscode@127.0.0.1
+26/11/19 15:43:44 WARN SparkSession: Using an existing Spark session; only runtime SQL configurations will take effect.
+26/11/19 15:43:44 WARN HiveConf: HiveConf of name hive.stats.jdbc.timeout does not exist
+26/11/19 15:43:44 WARN HiveConf: HiveConf of name hive.stats.retries.wait does not exist
+26/11/19 15:43:44 WARN ObjectStore: Failed to get database global_temp, returning NoSuchObjectException
+26/11/19 15:43:44 WARN SparkSession: Using an existing Spark session; only runtime SQL configurations will take effect.
+26/11/19 15:43:44 WARN ObjectStore: Failed to get database silver, returning NoSuchObjectException
+[0m15:43:44  Concurrency: 1 threads (target='dev')
+[0m15:43:44
+[0m15:43:44  1 of 2 START sql view model default.stg_drivers ................................ [RUN]
+26/11/19 15:43:44 WARN SparkSession: Using an existing Spark session; only runtime SQL configurations will take effect.
+26/11/19 15:43:45 WARN HiveConf: HiveConf of name hive.stats.jdbc.timeout does not exist
+26/11/19 15:43:45 WARN HiveConf: HiveConf of name hive.stats.retries.wait does not exist
+26/11/19 15:43:48 WARN SessionState: METASTORE_FILTER_HOOK will be ignored, since hive.security.authorization.manager is set to instance of HiveAuthorizerFactory.
+26/11/19 15:43:48 WARN HiveConf: HiveConf of name hive.internal.ss.authz.settings.applied.marker does not exist
+26/11/19 15:43:48 WARN HiveConf: HiveConf of name hive.stats.jdbc.timeout does not exist
+26/11/19 15:43:48 WARN HiveConf: HiveConf of name hive.stats.retries.wait does not exist
+[0m15:43:48  1 of 2 OK created sql view model default.stg_drivers ........................... [[32mOK[0m in 3.93s]
+[0m15:43:48  2 of 2 START sql view model default.stg_trips .................................. [RUN]
+26/11/19 15:43:48 WARN SparkSession: Using an existing Spark session; only runtime SQL configurations will take effect.
+[0m15:43:49  2 of 2 OK created sql view model default.stg_trips ............................. [[32mOK[0m in 0.49s]
+[0m15:43:49
+[0m15:43:49  Finished running 2 view models in 0 hours 0 minutes and 12.58 seconds (12.58s).
+[0m15:43:49
+[0m15:43:49  [32mCompleted successfully[0m
+[0m15:43:49
+[0m15:43:49  Done. PASS=2 WARN=0 ERROR=0 SKIP=0 TOTAL=2

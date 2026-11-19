@@ -1,0 +1,2 @@
+lakehouse/silver/trips/_delta_log/00000000000000000001.json:"delta.constraints.positive_fare":"fare_sar > 0"
+lakehouse/silver/trips/_delta_log/00000000000000000002.json:"delta.constraints.positive_fare":"fare_sar > 0","delta.constraints.valid_duration":"ended_at > started_at"

@@ -1,0 +1,91 @@
+[0m15:44:45  Running with dbt=1.8.10
+[0m15:44:45  This version of dbt is deprecated and no longer receives regular patches, including for known bugs. We recommend upgrading to a newer supported version of dbt: https://docs.getdbt.com/docs/dbt-versions
+[0m15:44:46  Registered adapter: spark=1.8.0
+[0m15:44:46  Found 3 models, 5 data tests, 2 sources, 588 macros
+[0m15:44:46
+26/11/19 15:44:48 WARN Utils: Your hostname, codespaces-853c01 resolves to a loopback address: 127.0.0.1; using 10.0.0.101 instead (on interface eth0)
+26/11/19 15:44:48 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+:: loading settings :: url = jar:file:/workspaces/masar-lakehouse/.venv/lib/python3.11/site-packages/pyspark/jars/ivy-2.5.1.jar!/org/apache/ivy/core/settings/ivysettings.xml
+Ivy Default Cache set to: /home/vscode/.ivy2/cache
+The jars for the packages stored in: /home/vscode/.ivy2/jars
+io.delta#delta-spark_2.12 added as a dependency
+:: resolving dependencies :: org.apache.spark#spark-submit-parent-fb072e32-7a37-40ff-90eb-75542da3e1a6;1.0
+	confs: [default]
+	found io.delta#delta-spark_2.12;3.2.0 in central
+	found io.delta#delta-storage;3.2.0 in central
+	found org.antlr#antlr4-runtime;4.9.3 in central
+:: resolution report :: resolve 188ms :: artifacts dl 9ms
+	:: modules in use:
+	io.delta#delta-spark_2.12;3.2.0 from central in [default]
+	io.delta#delta-storage;3.2.0 from central in [default]
+	org.antlr#antlr4-runtime;4.9.3 from central in [default]
+	---------------------------------------------------------------------
+	|                  |            modules            ||   artifacts   |
+	|       conf       | number| search|dwnlded|evicted|| number|dwnlded|
+	---------------------------------------------------------------------
+	|      default     |   3   |   0   |   0   |   0   ||   3   |   0   |
+	---------------------------------------------------------------------
+:: retrieving :: org.apache.spark#spark-submit-parent-fb072e32-7a37-40ff-90eb-75542da3e1a6
+	confs: [default]
+	0 artifacts copied, 3 already retrieved (0kB/6ms)
+26/11/19 15:44:48 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+26/11/19 15:44:52 WARN HiveConf: HiveConf of name hive.stats.jdbc.timeout does not exist
+26/11/19 15:44:52 WARN HiveConf: HiveConf of name hive.stats.retries.wait does not exist
+26/11/19 15:44:54 WARN ObjectStore: Version information not found in metastore. hive.metastore.schema.verification is not enabled so recording the schema version 2.3.0
+26/11/19 15:44:54 WARN ObjectStore: setMetaStoreSchemaVersion called but recording version is disabled: version = 2.3.0, comment = Set by MetaStore vscode@127.0.0.1
+26/11/19 15:44:54 WARN ObjectStore: Failed to get database global_temp, returning NoSuchObjectException
+26/11/19 15:44:55 WARN SparkSession: Using an existing Spark session; only runtime SQL configurations will take effect.
+[0m15:44:55  Concurrency: 1 threads (target='dev')
+[0m15:44:55
+[0m15:44:55  1 of 5 START test accepted_values_silver_trips_city__Riyadh__Jeddah__Dammam__Mecca__Medina  [RUN]
+26/11/19 15:44:55 WARN SparkSession: Using an existing Spark session; only runtime SQL configurations will take effect.
+26/11/19 15:44:55 WARN HiveConf: HiveConf of name hive.stats.jdbc.timeout does not exist
+26/11/19 15:44:55 WARN HiveConf: HiveConf of name hive.stats.retries.wait does not exist
+26/11/19 15:44:59 WARN SparkStringUtils: Truncated the string representation of a plan since it was too large. This behavior can be adjusted by setting 'spark.sql.debug.maxToStringFields'.
+
+[Stage 3:>                                                         (0 + 4) / 50]
+
+[Stage 3:========>                                                 (7 + 4) / 50]
+
+[Stage 3:=============>                                           (12 + 4) / 50]
+
+[Stage 3:====================>                                    (18 + 4) / 50]
+
+[Stage 3:=========================>                               (22 + 4) / 50]
+
+[Stage 3:=================================>                       (29 + 4) / 50]
+
+[Stage 3:=======================================>                 (35 + 4) / 50]
+
+[Stage 3:==================================================>      (44 + 4) / 50]
+
+
+[0m15:45:05  1 of 5 PASS accepted_values_silver_trips_city__Riyadh__Jeddah__Dammam__Mecca__Medina  [[32mPASS[0m in 9.90s]
+[0m15:45:05  2 of 5 START test dbt_utils_accepted_range_silver_trips_fare_sar__False__0 ..... [RUN]
+26/11/19 15:45:05 WARN SparkSession: Using an existing Spark session; only runtime SQL configurations will take effect.
+[0m15:45:05  2 of 5 PASS dbt_utils_accepted_range_silver_trips_fare_sar__False__0 ........... [[32mPASS[0m in 0.83s]
+[0m15:45:05  3 of 5 START test not_null_silver_trips_trip_id ................................ [RUN]
+26/11/19 15:45:06 WARN SparkSession: Using an existing Spark session; only runtime SQL configurations will take effect.
+[0m15:45:06  3 of 5 PASS not_null_silver_trips_trip_id ...................................... [[32mPASS[0m in 0.73s]
+[0m15:45:06  4 of 5 START test relationships_silver_trips_driver_id__driver_id__ref_stg_drivers_  [RUN]
+26/11/19 15:45:06 WARN SparkSession: Using an existing Spark session; only runtime SQL configurations will take effect.
+
+[Stage 20:=====================>                                  (19 + 4) / 50]
+
+[Stage 20:=================================>                      (30 + 4) / 50]
+
+[Stage 20:============================================>           (40 + 4) / 50]
+
+
+[0m15:45:09  4 of 5 PASS relationships_silver_trips_driver_id__driver_id__ref_stg_drivers_ .. [[32mPASS[0m in 3.13s]
+[0m15:45:09  5 of 5 START test unique_silver_trips_trip_id .................................. [RUN]
+26/11/19 15:45:09 WARN SparkSession: Using an existing Spark session; only runtime SQL configurations will take effect.
+[0m15:45:10  5 of 5 PASS unique_silver_trips_trip_id ........................................ [[32mPASS[0m in 0.97s]
+[0m15:45:10
+[0m15:45:10  Finished running 5 data tests in 0 hours 0 minutes and 24.15 seconds (24.15s).
+[0m15:45:10
+[0m15:45:10  [32mCompleted successfully[0m
+[0m15:45:10
+[0m15:45:10  Done. PASS=5 WARN=0 ERROR=0 SKIP=0 TOTAL=5

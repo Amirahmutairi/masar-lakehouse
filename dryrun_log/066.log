@@ -1,0 +1,12 @@
+  fare_positive      passed=True  bad_rows=0
+  city_known         passed=True  bad_rows=0
+  duration_sane      passed=True  bad_rows=0
+  fare_mean_sane     passed=True  bad_rows=0
+[quality_check] OK
+  zone_hourly_demand rows: 120
+[gold_zone_demand] OK
+  trip_features rows: 44,371
+[gold_trip_features] OK
+  maintained zone_hourly_demand
+  maintained trip_features
+[optimize_vacuum] OK

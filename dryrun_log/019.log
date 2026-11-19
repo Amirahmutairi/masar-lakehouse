@@ -1,0 +1,3 @@
+cd dbt/masar && .venv/bin/dbt deps
+/bin/sh: 1: .venv/bin/dbt: not found
+make: *** [Makefile:46: dbt-deps] Error 127

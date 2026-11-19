@@ -1,0 +1,105 @@
+[0m15:44:14  Running with dbt=1.8.10
+[0m15:44:14  This version of dbt is deprecated and no longer receives regular patches, including for known bugs. We recommend upgrading to a newer supported version of dbt: https://docs.getdbt.com/docs/dbt-versions
+[0m15:44:15  Registered adapter: spark=1.8.0
+[0m15:44:15  Found 3 models, 5 data tests, 2 sources, 588 macros
+[0m15:44:15
+26/11/19 15:44:17 WARN Utils: Your hostname, codespaces-853c01 resolves to a loopback address: 127.0.0.1; using 10.0.0.101 instead (on interface eth0)
+26/11/19 15:44:17 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+:: loading settings :: url = jar:file:/workspaces/masar-lakehouse/.venv/lib/python3.11/site-packages/pyspark/jars/ivy-2.5.1.jar!/org/apache/ivy/core/settings/ivysettings.xml
+Ivy Default Cache set to: /home/vscode/.ivy2/cache
+The jars for the packages stored in: /home/vscode/.ivy2/jars
+io.delta#delta-spark_2.12 added as a dependency
+:: resolving dependencies :: org.apache.spark#spark-submit-parent-65376050-c65b-4a19-8706-db6083c03031;1.0
+	confs: [default]
+	found io.delta#delta-spark_2.12;3.2.0 in central
+	found io.delta#delta-storage;3.2.0 in central
+	found org.antlr#antlr4-runtime;4.9.3 in central
+:: resolution report :: resolve 181ms :: artifacts dl 9ms
+	:: modules in use:
+	io.delta#delta-spark_2.12;3.2.0 from central in [default]
+	io.delta#delta-storage;3.2.0 from central in [default]
+	org.antlr#antlr4-runtime;4.9.3 from central in [default]
+	---------------------------------------------------------------------
+	|                  |            modules            ||   artifacts   |
+	|       conf       | number| search|dwnlded|evicted|| number|dwnlded|
+	---------------------------------------------------------------------
+	|      default     |   3   |   0   |   0   |   0   ||   3   |   0   |
+	---------------------------------------------------------------------
+:: retrieving :: org.apache.spark#spark-submit-parent-65376050-c65b-4a19-8706-db6083c03031
+	confs: [default]
+	0 artifacts copied, 3 already retrieved (0kB/6ms)
+26/11/19 15:44:17 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+26/11/19 15:44:21 WARN HiveConf: HiveConf of name hive.stats.jdbc.timeout does not exist
+26/11/19 15:44:21 WARN HiveConf: HiveConf of name hive.stats.retries.wait does not exist
+26/11/19 15:44:22 WARN ObjectStore: Version information not found in metastore. hive.metastore.schema.verification is not enabled so recording the schema version 2.3.0
+26/11/19 15:44:22 WARN ObjectStore: setMetaStoreSchemaVersion called but recording version is disabled: version = 2.3.0, comment = Set by MetaStore vscode@127.0.0.1
+26/11/19 15:44:23 WARN SparkSession: Using an existing Spark session; only runtime SQL configurations will take effect.
+26/11/19 15:44:23 WARN ObjectStore: Failed to get database silver, returning NoSuchObjectException
+26/11/19 15:44:23 WARN ObjectStore: Failed to get database silver, returning NoSuchObjectException
+26/11/19 15:44:23 WARN ObjectStore: Failed to get database global_temp, returning NoSuchObjectException
+26/11/19 15:44:23 WARN ObjectStore: Failed to get database silver, returning NoSuchObjectException
+26/11/19 15:44:23 WARN SparkSession: Using an existing Spark session; only runtime SQL configurations will take effect.
+26/11/19 15:44:24 WARN HiveConf: HiveConf of name hive.stats.jdbc.timeout does not exist
+26/11/19 15:44:24 WARN HiveConf: HiveConf of name hive.stats.retries.wait does not exist
+26/11/19 15:44:24 WARN SparkSession: Using an existing Spark session; only runtime SQL configurations will take effect.
+[0m15:44:24  Concurrency: 1 threads (target='dev')
+[0m15:44:24
+[0m15:44:24  1 of 1 START sql incremental model silver.trips ................................ [RUN]
+26/11/19 15:44:24 WARN SparkSession: Using an existing Spark session; only runtime SQL configurations will take effect.
+26/11/19 15:44:24 WARN HiveConf: HiveConf of name hive.stats.jdbc.timeout does not exist
+26/11/19 15:44:24 WARN HiveConf: HiveConf of name hive.stats.retries.wait does not exist
+26/11/19 15:44:29 WARN SparkStringUtils: Truncated the string representation of a plan since it was too large. This behavior can be adjusted by setting 'spark.sql.debug.maxToStringFields'.
+
+[Stage 4:>                                                         (0 + 4) / 50]
+
+[Stage 4:====>                                                     (4 + 4) / 50]
+
+[Stage 4:=========>                                                (8 + 4) / 50]
+
+[Stage 4:=============>                                           (12 + 4) / 50]
+
+[Stage 4:====================>                                    (18 + 4) / 50]
+
+[Stage 4:==========================>                              (23 + 4) / 50]
+
+[Stage 4:===============================>                         (28 + 4) / 50]
+
+[Stage 4:======================================>                  (34 + 4) / 50]
+
+[Stage 4:============================================>            (39 + 4) / 50]
+
+[Stage 4:=================================================>       (43 + 4) / 50]
+
+
+
+[Stage 10:==============>                                         (13 + 5) / 50]
+
+[Stage 10:======================>                                 (20 + 4) / 50]
+
+[Stage 10:=================================>                      (30 + 4) / 50]
+
+[Stage 10:==========================================>             (38 + 4) / 50]
+
+[Stage 10:===================================================>    (46 + 4) / 50]
+
+
+
+[Stage 14:>                                                         (0 + 2) / 2]
+
+[Stage 14:=============================>                            (1 + 1) / 2]
+
+
+26/11/19 15:44:41 WARN HiveExternalCatalog: Couldn't find corresponding Hive SerDe for data source provider delta. Persisting data source table `spark_catalog`.`silver`.`trips` into Hive metastore in Spark SQL specific format, which is NOT compatible with Hive.
+26/11/19 15:44:41 WARN SessionState: METASTORE_FILTER_HOOK will be ignored, since hive.security.authorization.manager is set to instance of HiveAuthorizerFactory.
+26/11/19 15:44:41 WARN HiveConf: HiveConf of name hive.internal.ss.authz.settings.applied.marker does not exist
+26/11/19 15:44:41 WARN HiveConf: HiveConf of name hive.stats.jdbc.timeout does not exist
+26/11/19 15:44:41 WARN HiveConf: HiveConf of name hive.stats.retries.wait does not exist
+[0m15:44:41  1 of 1 OK created sql incremental model silver.trips ........................... [[32mOK[0m in 16.92s]
+[0m15:44:41
+[0m15:44:41  Finished running 1 incremental model in 0 hours 0 minutes and 25.77 seconds (25.77s).
+[0m15:44:41
+[0m15:44:41  [32mCompleted successfully[0m
+[0m15:44:41
+[0m15:44:41  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1
