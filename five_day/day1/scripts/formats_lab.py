@@ -45,7 +45,9 @@ def bad_append(df, writer) -> str:
 
 def main() -> None:
     s = get_spark("formats-lab")
-    src = s.read.format("delta").load(f"{BRONZE}/trips")
+    # Bronze keeps raw text; give fare_sar a real numeric type so a bad append is a real test.
+    src = (s.read.format("delta").load(f"{BRONZE}/trips")
+           .withColumn("fare_sar", F.col("fare_sar").cast("double")))
     out = LAKEHOUSE / "scratch" / "formats"
     shutil.rmtree(out, ignore_errors=True)
 
