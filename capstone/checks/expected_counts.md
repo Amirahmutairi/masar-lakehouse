@@ -1,8 +1,19 @@
-# Expected outputs (fill from a verified Codespace run)
+# Expected outputs (from a Codespace run on day3-solutions, seed 42)
 
-| Step | Output | Expected |
-|------|--------|----------|
-| 1 | bronze trips rows | <VERIFY> |
-| 2 | silver_trips rows | <VERIFY> |
-| 4 | gold mart rows | <VERIFY> |
-| 7 | time-travel: version N vs N-1 | <VERIFY> |
+| Step | Table / output | Expected rows |
+|------|----------------|---------------|
+| 1 | bronze/trips | 48,200 |
+| 1 | bronze/drivers | 1,850 |
+| 1 | bronze/gps_pings | 120,000 |
+| 2 | silver/trips | 44,371 |
+| 4 | gold/zone_hourly_demand | 120 |
+| 4 | gold/trip_features | 44,371 |
+| 5 | gold/training_set | 44,371 |
+| 5 | gold/bi_trips_safe | 44,371 |
+| 7 | time travel on silver/trips | older version count differs from latest |
+
+Quality checks (all passed, bad_rows=0): trip_id_unique, fare_is_double, fare_positive,
+city_known, duration_sane, fare_mean_sane.
+
+Open question: silver 44,371 matches the post re-merge figure from the 3-day course
+(pre-re-merge 44,364). Confirm which value a clean run gives.

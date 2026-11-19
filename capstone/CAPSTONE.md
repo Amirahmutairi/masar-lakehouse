@@ -28,13 +28,13 @@ Run each step, then compare the output with the checkpoint. Tick it only when it
 
 | # | Step | Based on | Checkpoint |
 |---|------|----------|------------|
-| 1 | Land bronze | T1 | Bronze row count = <VERIFY> |
-| 2 | Build silver with dbt and the quality gate | T3, T7 | Silver row count = <VERIFY>; dbt tests pass |
+| 1 | Land bronze | T1 | bronze/trips = 48,200 rows (drivers 1,850; gps_pings 120,000) |
+| 2 | Build silver with dbt and the quality gate | T3, T7 | silver/trips = 44,371 rows; dbt tests pass; quality checks all bad_rows=0 |
 | 3 | Add one Delta constraint and one schema change | T4 | Bad insert is rejected; new column visible |
-| 4 | Build one gold mart | T8 | Gold row count = <VERIFY> |
+| 4 | Build one gold mart | T8 | zone_hourly_demand = 120 rows (or trip_features = 44,371) |
 | 5 | Build a consumer table (BI-safe view OR training set) | T9 | No PII columns; leakage check passes |
 | 6 | Run everything with one command | T8 | run_all.sh exits 0 from a clean state |
-| 7 | Prove it: counts per layer and one time-travel query | T5 | Version N and N-1 counts differ as expected |
+| 7 | Prove it: counts per layer and one time-travel query | T5 | silver/trips has more than one version; an older version's count differs from the latest |
 | 8 | Write the README and submit | SUBMIT.md | Template filled, branch pushed |
 
 Stretch (optional): second gold mart; quarantine table for null/duplicate trip_id.
@@ -70,4 +70,9 @@ completing steps 1-6.
 
 - Known open items (do NOT expect trainees to fix; mention only as discussion):
   erased trips returning after a bronze re-merge; quarantine write not idempotent.
-- Verify every <VERIFY> count in the Codespace before the course.
+- Counts were taken from a Codespace on day3-solutions after `make data` (seed 42) and
+  `make pipeline`. Silver = 44,371 equals the post re-merge figure from the 3-day course
+  (the pre-re-merge figure was 44,364). Confirm which one a clean run gives before the
+  course, and tell trainees to allow either if they see the other.
+- Delta version numbers depend on how many times a table was rebuilt, so the checklist
+  uses relative checks (older vs latest), not fixed version numbers.
