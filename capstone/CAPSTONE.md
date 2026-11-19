@@ -1,6 +1,6 @@
 # Capstone: Assemble Your Mini-Lakehouse (SDA-DSC-214, Day 5)
 
-Time: 4 hours (240 minutes), including a break and a pair review. Work in pairs, one repo per trainee.
+Time: 200 minutes, including a break and a pair review (the Day 5 survey follows). Work in pairs, one repo per trainee.
 Covers LO7 (build a working Mini-Lakehouse), with LO3, LO4, LO6, LO8 touched.
 
 Rule: every step is a variation of a tutorial you already ran. Nothing here is new.
@@ -57,16 +57,16 @@ Reminders: one Spark session at a time. If a step hangs, close other terminals r
 Pass mark: 70. Distinction: 90. Completing steps 1-6 correctly earns about 70 (the first four
 rows above). Stretch bonus (+5) counts only if the score without it is at least 80, capped at 100.
 
-## 4. Trainer timing (240 minutes)
+## 4. Trainer timing (200 minutes)
 
 | Minutes | Activity |
 |---------|----------|
 | 0-10 | Brief: goal, checklist, rules |
-| 10-130 | Build steps 1-4; checkpoints after steps 2 and 4 |
-| 130-145 | Break |
-| 145-205 | Build steps 5-7; checkpoint after step 6 |
-| 205-225 | README, commit, submit |
-| 225-240 | Pair review: explain your pipeline to your partner; trainer Q&A |
+| 10-100 | Build steps 1-4; checkpoints after steps 2 and 4 |
+| 100-110 | Break |
+| 110-160 | Build steps 5-7; checkpoint after step 6 |
+| 160-185 | README, commit, submit |
+| 185-200 | Pair review: explain your pipeline to your partner |
 
 ## 5. Trainer notes
 
