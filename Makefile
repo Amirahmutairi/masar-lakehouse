@@ -1,6 +1,6 @@
 # SDA-DSC-214 workshop helpers.  Usage: make <target>
 PY  := $(if $(wildcard .venv/bin/python),.venv/bin/python,python3)
-DBT := $(if $(wildcard .venv/bin/dbt),.venv/bin/dbt,dbt)
+DBT := $(if $(wildcard .venv/bin/dbt),$(CURDIR)/.venv/bin/dbt,dbt)
 export PYTHONPATH := $(CURDIR)/src
 export MASAR_HOME := $(CURDIR)
 
