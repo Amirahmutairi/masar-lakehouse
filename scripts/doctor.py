@@ -44,9 +44,9 @@ check("git", shutil.which("git") is not None)
 docker = shutil.which("docker")
 if docker:
     r = subprocess.run(["docker", "info"], capture_output=True, text=True)
-    check("docker (Day 2)", r.returncode == 0, "running" if r.returncode == 0 else "installed but not running")
+    check("docker (Day 3)", r.returncode == 0, "running" if r.returncode == 0 else "installed but not running")
 else:
-    check("docker (Day 2)", False, "not found")
+    check("docker (Day 3)", False, "not found")
 
 print()
 if failed:
