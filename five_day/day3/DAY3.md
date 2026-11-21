@@ -216,6 +216,7 @@ Commit your scripts, but never add `lakehouse/` or `data/`. Stop the Codespace.
 | --- | --- |
 | Erased rider's trips came back | `dbt run` re-merged them from bronze; do not run dbt in Tutorial 5 |
 | Derby lock error | Another Spark session is open; close it, one at a time |
+| Offsets are higher than 560, 720, 720 | The topic still holds pings from an earlier run. Run `docker compose down -v`, then `make kafka-up` and `make kafka-topic` again |
 | `make kafka-up` fails or hangs | Run `docker ps`, wait for the image pull, check the network |
 | Ingest job prints nothing and never ends | Normal for a stream; watch the `_delta_log` count in a second terminal |
 | `Failed to find data source: kafka` | The first Spark call in the process must be `get_spark(kafka=True)` |
