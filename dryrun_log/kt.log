@@ -1,0 +1,84 @@
+--- make kafka-up
+docker compose up -d kafka
+ Container kafka  Starting
+ Container kafka  Started
+docker compose exec kafka /opt/kafka/bin/kafka-topics.sh --create --if-not-exists \
+  --topic masar.gps.pings --partitions 3 --bootstrap-server localhost:9092
+WARNING: Due to limitations in metric names, topics with a period ('.') or underscore ('_') could collide. To avoid issues it is best to use either, but not both.
+[2026-11-21 00:16:54,043] WARN [AdminClient clientId=adminclient-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available. (org.apache.kafka.clients.NetworkClient)
+[2026-11-21 00:16:54,133] WARN [AdminClient clientId=adminclient-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available. (org.apache.kafka.clients.NetworkClient)
+[2026-11-21 00:16:54,338] WARN [AdminClient clientId=adminclient-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available. (org.apache.kafka.clients.NetworkClient)
+[2026-11-21 00:16:54,539] WARN [AdminClient clientId=adminclient-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available. (org.apache.kafka.clients.NetworkClient)
+[2026-11-21 00:16:55,045] WARN [AdminClient clientId=adminclient-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available. (org.apache.kafka.clients.NetworkClient)
+[2026-11-21 00:16:56,049] WARN [AdminClient clientId=adminclient-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available. (org.apache.kafka.clients.NetworkClient)
+[2026-11-21 00:16:57,054] WARN [AdminClient clientId=adminclient-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available. (org.apache.kafka.clients.NetworkClient)
+[2026-11-21 00:16:58,058] WARN [AdminClient clientId=adminclient-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available. (org.apache.kafka.clients.NetworkClient)
+[2026-11-21 00:16:58,962] WARN [AdminClient clientId=adminclient-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available. (org.apache.kafka.clients.NetworkClient)
+[2026-11-21 00:16:59,967] WARN [AdminClient clientId=adminclient-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available. (org.apache.kafka.clients.NetworkClient)
+[2026-11-21 00:17:00,971] WARN [AdminClient clientId=adminclient-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available. (org.apache.kafka.clients.NetworkClient)
+[2026-11-21 00:17:01,775] WARN [AdminClient clientId=adminclient-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available. (org.apache.kafka.clients.NetworkClient)
+[2026-11-21 00:17:02,779] WARN [AdminClient clientId=adminclient-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available. (org.apache.kafka.clients.NetworkClient)
+[2026-11-21 00:17:03,783] WARN [AdminClient clientId=adminclient-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available. (org.apache.kafka.clients.NetworkClient)
+[2026-11-21 00:17:04,688] WARN [AdminClient clientId=adminclient-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available. (org.apache.kafka.clients.NetworkClient)
+[2026-11-21 00:17:05,592] WARN [AdminClient clientId=adminclient-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available. (org.apache.kafka.clients.NetworkClient)
+--- docker compose exec -T kafka /opt/kafka/bin/kafka-topics.sh --describe --topic masar.gps.pings --bootstrap-server localhost:9092
+Topic: masar.gps.pings	TopicId: kCL4RWlrR4-EqziQg73ZjA	PartitionCount: 3	ReplicationFactor: 1	Configs: segment.bytes=1073741824
+	Topic: masar.gps.pings	Partition: 0	Leader: 1	Replicas: 1	Isr: 1
+	Topic: masar.gps.pings	Partition: 1	Leader: 1	Replicas: 1	Isr: 1
+	Topic: masar.gps.pings	Partition: 2	Leader: 1	Replicas: 1	Isr: 1
+--- python -m masar.stream.gps_producer 2000
+sent 2000 pings; per partition: {0: 560, 1: 720, 2: 720}
+--- docker compose exec -T kafka /opt/kafka/bin/kafka-console-consumer.sh --topic masar.gps.pings --from-beginning --max-messages 3 --bootstrap-server localhost:9092
+{"trip_id": "T-026119", "driver_id": "D-0966", "city": "Riyadh", "lat": 24.734801, "lon": 46.714561, "event_ts": "2026-06-01T00:10:08Z"}
+{"trip_id": "T-026119", "driver_id": "D-0966", "city": "Riyadh", "lat": 24.733474, "lon": 46.714358, "event_ts": "2026-06-01T00:10:18Z"}
+Processed a total of 3 messages
+--- docker compose exec -T kafka /opt/kafka/bin/kafka-get-offsets.sh --topic masar.gps.pings --bootstrap-server localhost:9092
+masar.gps.pings:0:1680
+masar.gps.pings:1:2160
+masar.gps.pings:2:2160
+delta_log entries after first 2000 pings: 5 (expected 5)
+sent 2000 pings; per partition: {0: 560, 1: 720, 2: 720}
+killed mid-flight; restarting
+:: loading settings :: url = jar:file:/workspaces/masar-lakehouse/.venv/lib/python3.11/site-packages/pyspark/jars/ivy-2.5.1.jar!/org/apache/ivy/core/settings/ivysettings.xml
+Ivy Default Cache set to: /home/vscode/.ivy2/cache
+The jars for the packages stored in: /home/vscode/.ivy2/jars
+io.delta#delta-spark_2.12 added as a dependency
+:: resolving dependencies :: org.apache.spark#spark-submit-parent-cc071af5-88eb-4ec5-a545-26e3ee1983e8;1.0
+	confs: [default]
+	found io.delta#delta-spark_2.12;3.2.0 in central
+	found io.delta#delta-storage;3.2.0 in central
+	found org.antlr#antlr4-runtime;4.9.3 in central
+:: resolution report :: resolve 175ms :: artifacts dl 9ms
+	:: modules in use:
+	io.delta#delta-spark_2.12;3.2.0 from central in [default]
+	io.delta#delta-storage;3.2.0 from central in [default]
+	org.antlr#antlr4-runtime;4.9.3 from central in [default]
+	---------------------------------------------------------------------
+	|                  |            modules            ||   artifacts   |
+	|       conf       | number| search|dwnlded|evicted|| number|dwnlded|
+	---------------------------------------------------------------------
+	|      default     |   3   |   0   |   0   |   0   ||   3   |   0   |
+	---------------------------------------------------------------------
+:: retrieving :: org.apache.spark#spark-submit-parent-cc071af5-88eb-4ec5-a545-26e3ee1983e8
+	confs: [default]
+	0 artifacts copied, 3 already retrieved (0kB/6ms)
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+rows: 4000  distinct (trip_id, event_ts): 2000
+--- python -m masar.stream.ping_windows
+|{2026-06-01 00:15:00, 2026-06-01 00:20:00}|Mecca |60   |
+|{2026-06-01 00:15:00, 2026-06-01 00:20:00}|Riyadh|120  |
+|{2026-06-01 00:20:00, 2026-06-01 00:25:00}|Mecca |30   |
+|{2026-06-01 00:20:00, 2026-06-01 00:25:00}|Riyadh|120  |
+|{2026-06-01 00:25:00, 2026-06-01 00:30:00}|Medina|36   |
++------------------------------------------+------+-----+
+only showing top 10 rows
+
+docker compose down
+ Container kafka  Stopping
+ Container kafka  Stopped
+ Container kafka  Removing
+ Container kafka  Removed
+ Network masar-lakehouse_default  Removing
+ Network masar-lakehouse_default  Removed
+kafka down
+FINISHED
