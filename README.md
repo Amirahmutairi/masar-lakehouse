@@ -1,6 +1,6 @@
 # Masar Lakehouse: SDA-DSC-214 workshop starter
 
-Modern Data Engineering for AI Systems, 3 days x 4 hours. You build a small but complete
+Modern Data Engineering for AI Systems, 5 days x 5 hours. You build a small but complete
 Lakehouse for **Masar**, a (fictional) Saudi ride-hailing platform: bronze, silver and gold
 Delta tables, a dbt silver model, Kafka streaming, quality gates and serving for AI and BI.
 
@@ -8,7 +8,7 @@ This repo is the **starting point (before Day 1)**. Fork it, clone your fork, an
 
 ## Quick start
 
-Requirements: Python 3.10-3.12, Java 17, git. Docker is needed from Day 2.
+Requirements: Python 3.10-3.12, Java 17, git. Docker is needed from Day 3.
 
 ```bash
 git clone <your-fork-url> masar-lakehouse && cd masar-lakehouse
@@ -32,7 +32,7 @@ src/masar/config.py      shared paths and constants
 src/masar/register.py    registers bronze tables so dbt can read them
 src/masar/<package>/     empty packages you fill in during the tutorials
 dbt/masar/               dbt project shell (profile, packages); you write the models
-docker-compose.yml       single-broker Kafka for Day 2
+docker-compose.yml       single-broker Kafka for Day 3
 tests/                   tests for the data generator
 ```
 
@@ -47,8 +47,8 @@ Generated data (git-ignored):
 
 ## Rules of the workshop
 
-- Tutorials **add** files; run commands from the repo root unless a slide says otherwise.
-- If you fall behind, ask for the next `tutorial-N-start` branch.
+- Tutorials **add** files. Your trainer shares each day's `scripts/` folder; copy every file to the path your day's commands sheet shows. Run commands from the repo root unless a slide says otherwise.
+- If you fall behind, ask your trainer for help; do not skip a step, later steps depend on it.
 - Everything you build lives under `lakehouse/`. Start over any time with `make clean-lakehouse`.
 - Do not commit `lakehouse/` or generated data (already git-ignored).
 
