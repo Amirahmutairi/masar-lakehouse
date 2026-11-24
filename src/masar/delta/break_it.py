@@ -22,11 +22,10 @@ except Exception as e:
     print("REJECTED:", type(e).__name__, str(e)[:300])
 print("after bad fares:", count())
 
-bad_type = spark.createDataFrame([("T-BAD-2", "Riyadh", 10.0)], ["trip_id", "city", "fare_sar"])
+bad_type = spark.createDataFrame([("T-BAD-2", "Riyadh", "ten")], ["trip_id", "city", "fare_sar"])
 try:
     bad_type.write.format("delta").mode("append").save(SILVER)
     print("UNEXPECTED: write succeeded")
 except Exception as e:
     print("REJECTED:", type(e).__name__, str(e)[:300])
 print("after bad type:", count())
-
