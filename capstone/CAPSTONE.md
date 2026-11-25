@@ -6,6 +6,19 @@ Covers LO7 (build a working Mini-Lakehouse), with LO3, LO4, LO6, LO8 touched.
 Rule: every step is a variation of a tutorial you already ran. Nothing here is new.
 Expected counts come from a verified Codespace run (see capstone/checks/expected_counts.md).
 
+## 0. Start clean
+
+Same Codespace as Tutorial 9: commit and push your Day 1-5 work, switch to this branch, then empty the lakehouse so step 1 lands bronze exactly once.
+
+```bash
+git add -A && git commit -m "Day 1-5 work"
+git push -u origin HEAD
+git fetch origin capstone && git switch capstone
+make clean-lakehouse
+```
+
+Broken Codespace or joined late? Open a new Codespace on the `capstone` branch, then run `make setup`, `source .venv/bin/activate`, `make doctor` and `make data`.
+
 ## 1. Starter layout (already in this repo)
 
 You build inside the existing packages. Nothing new to install.
