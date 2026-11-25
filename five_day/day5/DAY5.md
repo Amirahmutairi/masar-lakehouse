@@ -76,29 +76,9 @@ No new code. Using the outputs you already have, answer two questions in pairs: 
 
 ## Minutes 60 to 260: capstone
 
-Stay in your own Codespace and on your own branch. Do not switch branches: your Day 1 to 5 files must stay in front of you. Save your work, then bring in only the capstone files and start from an empty lakehouse:
+Your trainer hands you `Capstone-files.zip`. Stay in your own Codespace and on your own branch (do not switch branches: your Day 1 to 5 files must stay in front of you). Open `capstone/CAPSTONE.md` section 0 and follow it from step A: it covers saving your work, unzipping the files and emptying the lakehouse. Do it in that order, and do not run `make clean-lakehouse` before you have pushed.
 
-```bash
-git add -A && git commit -m "Day 1-5 work"
-```
-
-```bash
-git push -u origin HEAD
-```
-
-```bash
-git fetch https://github.com/altherwy/masar-lakehouse.git capstone && git checkout FETCH_HEAD -- capstone src/masar/pipeline.py
-```
-
-```bash
-make clean-lakehouse
-```
-
-This adds `capstone/CAPSTONE.md`, `capstone/checks/` and the empty `src/masar/pipeline.py` skeleton (it replaces your Day 4 pipeline, so step 6 is yours to write; your old one is safe in the commit above). `make clean-lakehouse` deletes the lakehouse you built this week, so capstone step 1 lands bronze exactly once and the counts match the checklist. `data/` is kept. Do not run it before you have pushed.
-
-If your Codespace is broken or you joined late: open a new Codespace on the `capstone` branch, run `make setup`, `source .venv/bin/activate`, `make doctor` and `make data`, then copy the Day 1 to 5 files again from the day folders your trainer shared.
-
-Follow `capstone/CAPSTONE.md`. Check your counts against `capstone/checks/expected_counts.md`. Timing: 0 to 10 brief, 10 to 100 steps 1 to 4, 100 to 110 break (stop the Codespace if you leave your desk), 110 to 160 steps 5 to 7, 160 to 185 README and submit, 185 to 200 pair review.
+Then follow the rest of `capstone/CAPSTONE.md`. Check your counts against `capstone/checks/expected_counts.md`. Timing: 0 to 10 brief, 10 to 100 steps 1 to 4, 100 to 110 break (stop the Codespace if you leave your desk), 110 to 160 steps 5 to 7, 160 to 185 README and submit, 185 to 200 pair review.
 
 ## End of day
 
