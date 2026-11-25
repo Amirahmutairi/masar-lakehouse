@@ -76,11 +76,27 @@ No new code. Using the outputs you already have, answer two questions in pairs: 
 
 ## Minutes 60 to 260: capstone
 
-Everything for the capstone is on the `capstone` branch:
+Everything for the capstone is on the `capstone` branch. Stay in the same Codespace. First save your Day 1 to 5 work, then switch and start from an empty lakehouse:
+
+```bash
+git add -A && git commit -m "Day 1-5 work"
+```
+
+```bash
+git push -u origin HEAD
+```
 
 ```bash
 git fetch origin capstone && git switch capstone
 ```
+
+```bash
+make clean-lakehouse
+```
+
+`make clean-lakehouse` deletes the lakehouse you built this week, so capstone step 1 lands bronze exactly once and the counts match the checklist. `data/` is kept. Do not run it before you have pushed.
+
+If your Codespace is broken or you joined late: open a new Codespace on the `capstone` branch, then run `make setup`, `source .venv/bin/activate`, `make doctor` and `make data`. Skip the commands above.
 
 Follow `capstone/CAPSTONE.md`. Check your counts against `capstone/checks/expected_counts.md`. Timing: 0 to 10 brief, 10 to 100 steps 1 to 4, 100 to 110 break (stop the Codespace if you leave your desk), 110 to 160 steps 5 to 7, 160 to 185 README and submit, 185 to 200 pair review.
 
