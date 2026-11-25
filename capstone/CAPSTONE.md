@@ -8,16 +8,30 @@ Expected counts come from a verified Codespace run (see capstone/checks/expected
 
 ## 0. Start clean
 
-Stay in your own Codespace and on your own branch (do not switch branches, so your Day 1-5 files stay with you). Save your work, bring in the capstone files, then empty the lakehouse so step 1 lands bronze exactly once.
+Stay in your own Codespace and on your own branch (do not switch branches, so your Day 1-5 files stay with you).
+
+**A. Save your work first** (the next step replaces your Day 4 `src/masar/pipeline.py`; the old one stays safe in this commit):
 
 ```bash
 git add -A && git commit -m "Day 1-5 work"
 git push -u origin HEAD
+```
+
+**B. Bring in the capstone files.** Your trainer hands you `Capstone-files.zip`: upload it to the repo root and unzip it there (`unzip Capstone-files.zip`). No zip? Fetch the same files from the repo:
+
+```bash
 git fetch https://github.com/altherwy/masar-lakehouse.git capstone && git checkout FETCH_HEAD -- capstone src/masar/pipeline.py
+```
+
+Either way you now have `capstone/` (this file, `SUBMIT.md`, `checks/`) and the empty `src/masar/pipeline.py` skeleton. Step 6 is yours to write.
+
+**C. Empty the lakehouse** so step 1 lands bronze exactly once and your counts match the checklist (`data/` is kept). Do not run this before step A:
+
+```bash
 make clean-lakehouse
 ```
 
-The empty `src/masar/pipeline.py` replaces your Day 4 pipeline (step 6 is yours to write; the old one is in your commit). Broken Codespace or joined late? Open a new Codespace on the `capstone` branch, run `make setup`, `source .venv/bin/activate`, `make doctor` and `make data`, then copy the Day 1-5 files again from the day folders your trainer shared.
+Broken Codespace or joined late? Open a new Codespace on the `capstone` branch, run `make setup`, `source .venv/bin/activate`, `make doctor` and `make data`, then copy the Day 1-5 files again from the day folders your trainer shared.
 
 ## 1. Starter layout (already in this repo)
 
