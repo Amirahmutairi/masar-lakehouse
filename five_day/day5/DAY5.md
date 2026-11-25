@@ -87,7 +87,7 @@ git push -u origin HEAD
 ```
 
 ```bash
-git fetch origin capstone && git checkout origin/capstone -- capstone src/masar/pipeline.py
+git fetch https://github.com/altherwy/masar-lakehouse.git capstone && git checkout FETCH_HEAD -- capstone src/masar/pipeline.py
 ```
 
 ```bash
