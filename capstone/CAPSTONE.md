@@ -13,7 +13,7 @@ Stay in your own Codespace and on your own branch (do not switch branches, so yo
 ```bash
 git add -A && git commit -m "Day 1-5 work"
 git push -u origin HEAD
-git fetch origin capstone && git checkout origin/capstone -- capstone src/masar/pipeline.py
+git fetch https://github.com/altherwy/masar-lakehouse.git capstone && git checkout FETCH_HEAD -- capstone src/masar/pipeline.py
 make clean-lakehouse
 ```
 
@@ -32,8 +32,8 @@ src/masar/pipeline.py               step 6: TODO skeleton, run with: make pipeli
 capstone/checks/expected_counts.md  trainer's expected outputs per step
 ```
 
-Fallback: branch `capstone-solution` holds a working version. A stuck trainee may
-copy ONE step from it, mark it "borrowed" in the README, and move on.
+Fallback: if you are stuck on a step for more than 10 minutes, ask your trainer. The trainer can
+hand you the working files for that ONE step. Mark it "borrowed" in your README and move on.
 
 ## 2. Trainee checklist
 
@@ -48,7 +48,7 @@ Run each step, then compare the output with the checkpoint. Tick it only when it
 | 5 | Build a consumer table (BI-safe view OR training set) | T9 | No PII columns; leakage check passes |
 | 6 | Run everything with one command | T8 | make pipeline exits 0 from a clean state |
 | 7 | Prove it: counts per layer and one time-travel query | T5 | silver/trips has more than one version; an older version's count differs from the latest |
-| 8 | Write the README and submit | SUBMIT.md | Template filled, branch pushed |
+| 8 | Write the README and submit | SUBMIT.md | capstone/SUBMIT.md filled, branch pushed to your fork (see SUBMIT.md) |
 
 Stretch (optional): second gold mart; quarantine table for null/duplicate trip_id.
 
@@ -64,7 +64,7 @@ Reminders: one Spark session at a time. If a step hangs, close other terminals r
 | Gold and consumer table | 15 | Mart correct; consumer table has no PII or leakage |
 | Proof (counts, time travel) | 10 | Counts per layer shown; time-travel query correct |
 | README and explanation | 20 | Trainee explains each layer and one design choice in own words |
-| Borrowed steps | -5 each | Deduct per step copied from the fallback branch, max -15 |
+| Borrowed steps | -5 each | Deduct per step the trainer handed over, max -15 |
 | Stretch | +5 | Any one stretch item working, only if score is already 80 or more |
 
 Pass mark: 70. Distinction: 90. Completing steps 1-6 correctly earns about 70 (the first four
@@ -85,7 +85,7 @@ rows above). Stretch bonus (+5) counts only if the score without it is at least 
 
 - Known open items (do NOT expect trainees to fix; mention only as discussion):
   erased trips returning after a bronze re-merge; quarantine write not idempotent.
-- Counts were taken from a Codespace on day3-solutions after `make data` (seed 42) and
+- Counts were taken from a verified Codespace after `make data` (seed 42) and
   `make pipeline`. Silver = 44,371. It is 44,364 only if the Day 2 erase ran and the pipeline
   has not yet re-merged the erased trips (see DAY3.md).
 - Delta version numbers depend on how many times a table was rebuilt, so the checklist
